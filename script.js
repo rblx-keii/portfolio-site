@@ -444,4 +444,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         });
     }
+
+    // Auto-hide header on scroll stop
+    const header = document.querySelector('header');
+    if (header) {
+        let scrollTimeout;
+        let isMouseOverHeader = false;
+
+        const hideHeader = () => {
+            // Don't hide if we are at the top of the page OR if the mouse is over the header
+            if (window.scrollY > 0 && !isMouseOverHeader) {
+                header.style.top = `-${header.offsetHeight}px`;
+            }
+        };
+
+        header.addEventListener('mouseenter', () => {
+            isMouseOverHeader = true;
+            clearTimeout(scrollTimeout); // Keep header visible while hovering
+        });
+
+        header.addEventListener('mouseleave', () => {
+            isMouseOverHeader = false;
+            // After the mouse leaves, set a timeout to hide it again if scrolling has stopped
+            scrollTimeout = setTimeout(hideHeader, 1000);
+        });
+
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            header.style.top = '0'; // Show header immediately on any scroll activity
+
+            // Set a timeout to hide the header after 1000ms of inactivity
+            scrollTimeout = setTimeout(hideHeader, 1000);
+        });
+    }
 });
