@@ -437,45 +437,43 @@ header {
 }
 
 .project-title-and-tags {
-    display: flex; /* Use flexbox to align title and tags */
-    align-items: center; /* Vertically center them */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 15px; /* Space between title and tags container */
-    margin-bottom: 10px; /* Adjust spacing below this block */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 10px;
 }
 
 .project-title-and-tags h3 {
-    margin: 0; /* Remove default margin to control spacing with gap */
-    line-height: 1; /* Ensure consistent line height */
+  line-height: 1;
+  width: 100%;
 }
 
 .project-tags {
-    /* Existing styles, just remove the top margin as it's now handled by gap */
-    margin-top: 0; /* No need for top margin here */
-    margin-bottom: 0; /* No need for bottom margin here */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  flex-direction: row;
 }
 
 .project-tags h4 {
-    margin: 0 10px 0 0;
-    font-size: 1em;
-    color: #bbb;
+  margin: 0 10px 0 0;
+  font-size: 1em;
+  color: #bbb;
 }
 
 .tag {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.85em;
-    white-space: nowrap;
-    transition: all 0.2s ease-in-out;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.85em;
+  white-space: nowrap;
+  transition: all 0.2s ease-in-out;
 }
 
 .tag:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 /* CAROUSEL STYLES */

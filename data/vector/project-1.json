@@ -13,11 +13,36 @@
         "assets/images/vectors/icon_detail.svg"
     ],
     "tags": [ 
-        "Simple",
-        "Flat",
-        "SVG",
-        "No Outline",
-        "Modern"
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        }
     ],
     "demoLink": "https://www.roblox.com/games/..."
 }
