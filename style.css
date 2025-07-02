@@ -540,17 +540,18 @@ nav {
 }
 
 /* === BUTTONS === */
+/* === BUTTONS === */
 .button {
   display: inline-flex;
   align-items: center;
   padding: 0.75em 1.2em;
   background-color: #22c55e;
   color: white;
-  border: none;
+  border: none; /* Ensure no default border */
   border-radius: 6px;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* Add color and border-color to transition */
 }
 
 .button:hover {
@@ -559,8 +560,14 @@ nav {
 
 .button.alt {
   background-color: transparent;
-  outline: #16a34a;
-  outline-width: .1em;
+  color: #ffffff;
+  border: 2px solid #22c55e;
+}
+
+.button.alt:hover {
+  background-color: #22c55e;
+  color: white;
+  border-color: transparent;
 }
 
 .button.small {
