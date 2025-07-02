@@ -385,9 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const vectorProjectPaths = [
-        'data/vector/vector-1.json',
-        'data/vector/vector-2.json',
-        'data/vector/vector-3.json'
+        'data/vector/project-1.json',
     ];
 
 
@@ -420,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // These are for index.html
     setupHomePreview('scripting-preview-grid', scriptingPreviewPaths, 'scripting.html');
     setupHomePreview('gui-preview-grid', guiPreviewPaths, 'ui.html');
-    setupHomePreview('vector-preview-grid', vectorPreviewPaths, 'vector.html');
+    setupHomePreview('vector-preview-grid', vectorPreviewPaths, 'ui.html');
 
 
     // --- Dropdown Menu Hover Delay Logic ---
