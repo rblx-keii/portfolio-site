@@ -240,6 +240,13 @@ nav {
   padding: 1.5rem 1.5rem;
 }
 
+.gap-separator {
+  display: block;
+  margin: 2.5em auto;
+  width: 100%;
+  background: transparent;
+}
+
 /* === SECTION TITLES === */
 .section-title {
   text-align: center;
@@ -377,24 +384,24 @@ nav {
   border-radius: 8px;
   padding: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  text-align: left; /* Align content inside to the left */
+  text-align: left;
 }
 
 .project-content {
-  display: none; /* Hidden by default */
+  display: none;
   animation: fadeIn 0.5s forwards;
 }
 
 .project-content.active {
-  display: block; /* Show active content */
+  display: block;
 }
 
 /* CAROUSEL STYLES */
 .carousel-container {
   position: relative;
   width: 100%;
-  max-width: 700px; /* Adjust as needed for max carousel width */
-  margin: 0 auto 1.5rem auto; /* Center the carousel and add bottom margin */
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -407,20 +414,20 @@ nav {
 }
 
 .carousel-slide {
-  flex-shrink: 0; /* Prevents slides from shrinking */
+  flex-shrink: 0;
   width: 100%;
-  display: flex; /* Use flex to center content inside slide */
+  display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0f0f0f; /* Background for letterboxing if media is smaller */
+  background-color: #0f0f0f;
 }
 
 .carousel-slide img {
   max-width: 100%;
-  height: auto; /* Maintain aspect ratio */
-  max-height: 400px; /* Fixed height for consistency, adjust as needed */
-  object-fit: contain; /* 'contain' fits entire image, 'cover' fills space */
-  display: block; /* Remove extra space below image */
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
 }
 
 /* Styles for responsive YouTube embeds */
