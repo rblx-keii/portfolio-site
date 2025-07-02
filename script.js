@@ -313,9 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const vectorProjectPaths = [
         // Example paths - update with your actual Vector project paths
-        'data/vector/vector-1.json',
-        'data/vector/vector-2.json',
-        'data/vector/vector-3.json'
+        'data/vector/project-1.json',
     ];
 
     const scriptingProjectPaths = [
