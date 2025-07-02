@@ -357,13 +357,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 workItem.appendChild(fallbackImg);
             }
 
-
             const link = document.createElement('a');
             link.href = `${detailsPageUrl}#${project.id}`; // Link to the specific project on the full page
             link.classList.add('button', 'small');
             link.textContent = 'View Details';
-            workItem.appendChild(link);
 
+            // Add click event to handle scrolling and loading details
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default anchor behavior
+                const targetId = project.id;
+
+                // Navigate to the details page
+                window.location.href = link.href;
+
+                // Scroll to the showcase section after a slight delay to allow the page to load
+                setTimeout(() => {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 100); // Adjust the delay as necessary
+            });
+
+            workItem.appendChild(link);
             container.appendChild(workItem);
         });
     };
@@ -389,24 +405,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
 
-    // --- NEW: Define paths for Home Page Previews (subset of full lists) ---
-    // You can choose which projects to feature on the home page preview
-    const scriptingPreviewPaths = [
-        'data/scripts/project-1.json', // Example: Project Skyblock
-        'data/scripts/project-2.json'  // Example: Simulator X
-    ];
-
-    const guiPreviewPaths = [
-        'data/ui/project-1.json', // Example: Modern UI Pack
-        'data/ui/project-2.json'  // Example: Game Menu Redesign
-    ];
-
-    const vectorPreviewPaths = [
-        'data/vector/vector-1.json', // Example: Abstract Shapes Pack
-        'data/vector/vector-2.json'  // Example: Another Vector project
-    ];
-
-
     // --- Initialize Each Showcase with Dynamic Content from JSON files ---
     // These are for the full project pages (scripting.html, ui.html, vector.html)
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
@@ -416,9 +414,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- NEW: Initialize Home Page Previews ---
     // These are for index.html
-    setupHomePreview('scripting-preview-grid', scriptingPreviewPaths, 'scripting.html');
-    setupHomePreview('gui-preview-grid', guiPreviewPaths, 'ui.html');
-    setupHomePreview('vector-preview-grid', vectorPreviewPaths, 'ui.html');
+    setupHomePreview('scripting-preview-grid', scriptingProjectPaths, 'scripting.html');
+    setupHomePreview('gui-preview-grid', guiProjectPaths, 'ui.html');
+    setupHomePreview('vector-preview-grid', vectorProjectPaths, 'ui.html');
 
 
     // --- Dropdown Menu Hover Delay Logic ---
