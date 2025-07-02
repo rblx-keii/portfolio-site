@@ -1,0 +1,17 @@
+{
+    "id": "unique-ui-project-id",
+    "title": "UI Project Title Here",
+    "description": "A brief, compelling description of your UI project, highlighting its purpose and key design principles.",
+    "features": [
+        "Key feature 1: e.g., Responsive layout for multiple devices",
+        "Key feature 2: e.g., Interactive elements with smooth animations",
+        "Key feature 3: e.g., Modular and reusable UI components",
+        "Key feature 4: e.g., Optimized for performance"
+    ],
+    "media": [
+        "assets/images/your-ui-project-folder/screenshot1.jpg",
+        "assets/images/your-ui-project-folder/screenshot2.png",
+        "https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID_HERE"
+    ],
+    "demoLink": "#"
+}
