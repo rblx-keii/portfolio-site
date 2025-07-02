@@ -36,6 +36,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Dynamic active link for UI page sections on scroll
+    if (currentPath === 'ui.html') {
+        const vectorShowcaseSection = document.getElementById('vector-design-showcase');
+        const guiLink = document.querySelector('.dropdown-content a[href="ui.html"]');
+        const vectorLink = document.querySelector('.dropdown-content a[href="ui.html#vector-design-showcase"]');
+        const header = document.querySelector('header');
+
+        if (vectorShowcaseSection && guiLink && vectorLink && header) {
+            const handleUiScroll = () => {
+                const triggerOffset = header.offsetHeight + 20; // A small buffer below the header
+                const sectionTop = vectorShowcaseSection.getBoundingClientRect().top;
+
+                if (sectionTop <= triggerOffset) {
+                    guiLink.classList.remove('active');
+                    vectorLink.classList.add('active');
+                } else {
+                    guiLink.classList.add('active');
+                    vectorLink.classList.remove('active');
+                }
+            };
+            window.addEventListener('scroll', handleUiScroll, { passive: true });
+        }
+    }
+
+    const getYouTubeId = (url) => {
+        // Regex to find YouTube ID from various URL formats
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
     const initCarousel = (carouselElement) => {
         const slides = carouselElement.querySelectorAll('.carousel-slide');
         const prevButton = carouselElement.querySelector('.carousel-prev');
@@ -107,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (iframeElement) {
                     const youtubeId = iframeElement.dataset.youtubeId;
-                    const youtubeEmbedUrl = `https://www.youtube.com/embed/VIDEO_ID${youtubeId}?enablejsapi=1&origin=${window.location.protocol}//${window.location.host}&autoplay=0&rel=0&modestbranding=1`;
+                    const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&origin=${window.location.protocol}//${window.location.host}&autoplay=0&rel=0&modestbranding=1`;
 
                     if (i === currentSlideIndex) {
                         if (iframeElement.src !== youtubeEmbedUrl) {
@@ -140,8 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const displayContainer = document.getElementById(displayContainerId);
         const carouselsInitialized = {};
 
-        console.log(buttonContainerId, displayContainerId, projectPaths);
-
         if (!buttonContainer || !displayContainer) {
             return;
         }
@@ -152,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!response.ok) {
                         throw new Error(`Failed to fetch ${path}: ${response.statusText}`);
                     }
+                    
                     return response.json();
                 })
                 .catch(error => {
@@ -187,8 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const slide = document.createElement('div');
                 slide.classList.add('carousel-slide');
 
-                if (mediaSrc.includes('https://www.youtube.com/embed/VIDEO_ID')) {
-                    const youtubeId = mediaSrc.split('/').pop().split('?')[0];
+                const youtubeId = getYouTubeId(mediaSrc);
+                if (youtubeId) {
                     const videoWrapper = document.createElement('div');
                     videoWrapper.classList.add('video-wrapper');
                     const iframe = document.createElement('iframe');
@@ -355,20 +385,22 @@ document.addEventListener('DOMContentLoaded', () => {
             description.textContent = project.description.length > 100 ? project.description.substring(0, 97) + '...' : project.description;
             workItem.appendChild(description);
 
-            if (project.media && project.media.length > 0 && !project.media[0].includes('https://www.youtube.com/embed/VIDEO_ID') && !/\.(mp4|webm|ogg)$/i.test(project.media[0])) {
+            const firstMedia = project.media && project.media.length > 0 ? project.media[0] : null;
+            const previewYoutubeId = firstMedia ? getYouTubeId(firstMedia) : null;
+
+            if (previewYoutubeId) {
                 const img = document.createElement('img');
-                img.src = project.media[0];
-                img.alt = `${project.title} Preview`;
-                workItem.appendChild(img);
-            } else if (project.media && project.media.length > 0 && project.media[0].includes('https://www.youtube.com/embed/VIDEO_ID')) {
-                const img = document.createElement('img');
-                const youtubeId = project.media[0].split('/').pop().split('?')[0];
-                img.src = `http://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
+                img.src = `https://img.youtube.com/vi/${previewYoutubeId}/mqdefault.jpg`;
                 img.alt = `${project.title} Video Preview`;
                 img.style.objectFit = 'cover'; // Ensure it covers the area
                 workItem.appendChild(img);
+            } else if (firstMedia && !/\.(mp4|webm|ogg)$/i.test(firstMedia)) {
+                const img = document.createElement('img');
+                img.src = firstMedia;
+                img.alt = `${project.title} Preview`;
+                workItem.appendChild(img);
             } else {
-                 const fallbackImg = document.createElement('img');
+                const fallbackImg = document.createElement('img');
                 fallbackImg.src = 'assets/images/placeholder-preview.jpg';
                 fallbackImg.alt = 'No image preview available';
                 workItem.appendChild(fallbackImg);
@@ -411,10 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'data/vector/project-1.json',
     ];
 
-
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
     setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths);
-    setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths); // Will work when vector.html exists
+    setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths);
     
     setupHomePreview('scripting-preview-grid', scriptingProjectPaths, 'scripting.html');
     setupHomePreview('gui-preview-grid', guiProjectPaths, 'ui.html');

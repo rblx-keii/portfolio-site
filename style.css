@@ -700,11 +700,19 @@ footer {
     margin-top: 1rem;
   }
 
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
   .dropdown-content {
     position: static;
     box-shadow: none;
     margin-top: 0.25rem;
-    padding-left: 1rem;
+    width: 100%;
+    padding: 0.25rem 0;
+    background-color: #1a1a1a;
+    border-radius: 4px;
   }
 
   .dropdown:hover .dropdown-content {

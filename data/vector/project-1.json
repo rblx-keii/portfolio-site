@@ -1,16 +1,16 @@
 {
-    "id": "unique-vector-project-id",
-    "title": "Vector Design Pack Title Here",
-    "description": "A concise description of your vector design work, detailing what it includes and its applications.",
+    "id": "my-first-vector-pack",
+    "title": "Awesome Vector Icons",
+    "description": "This is a pack of custom vector icons I designed for a recent project. They are clean, modern, and scalable for any use case.",
     "features": [
-        "Key feature 1: e.g., Scalable SVG format for versatility",
-        "Key feature 2: e.g., Consistent visual style across all assets",
-        "Key feature 3: e.g., Easy customization of colors and strokes",
-        "Key feature 4: e.g., Optimized for web and print use"
+        "Includes 20 unique icons",
+        "Provided in SVG and PNG formats",
+        "Fully editable colors and strokes",
+        "Perfect for web and game UI"
     ],
     "media": [
-        "assets/images/your-vector-project-folder/preview1.svg",
-        "assets/images/your-vector-project-folder/detail-shot.png",
+        "assets/images/vectors/pack1_preview.png",
+        "assets/images/vectors/icon_detail.svg"
     ],
-    "demoLink": "#"
+    "demoLink": "https://www.roblox.com/games/..."
 }
