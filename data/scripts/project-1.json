@@ -1,0 +1,17 @@
+{
+    "id": "project1",
+    "title": "Project Skyblock",
+    "description": "Developed a comprehensive Skyblock game, including custom island generation, resource gathering, crafting systems, and player progression. Features extensive data persistence and anti-exploit measures.",
+    "features": [
+        "Custom Island Generation & Management",
+        "Advanced Resource/Item System",
+        "Player Shops & Trading",
+        "Data Persistence & Security"
+    ],
+    "media": [
+        "assets/images/project-skyblock/image1.jpg",
+        "assets/images/project-skyblock/image2.jpg",
+        "youtube.com/embed/dQw4w9WgXcQ"
+    ],
+    "demoLink": "#"
+}

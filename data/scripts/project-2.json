@@ -1,0 +1,16 @@
+{
+    "id": "project2",
+    "title": "Simulator X",
+    "description": "A fast-paced simulator game featuring advanced pet systems, rebirth mechanics, and a robust upgrade path. Optimized for performance and player retention with engaging UI/UX.",
+    "features": [
+        "Pet Collection & Fusion System",
+        "Rebirth & Prestige Mechanics",
+        "Global & Local Leaderboards",
+        "Customizable Player Avatars"
+    ],
+    "media": [
+        "assets/images/simulator-x/image1.jpg",
+        "assets/images/simulator-x/image2.jpg"
+    ],
+    "demoLink": "#"
+}
