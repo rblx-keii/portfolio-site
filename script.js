@@ -1,6 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const currentPath = window.location.pathname.split('/').pop();
+    const currentHash = window.location.hash;
 
-    // --- Carousel Initialization Logic (Reusable) ---
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const worksDropbtn = document.querySelector('.dropdown .dropbtn');
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+    if (worksDropbtn) {
+        worksDropbtn.classList.remove('dropbtn-active');
+    }
+
+    navLinks.forEach(link => {
+        const linkHref = link.getAttribute('href');
+        let linkPath = linkHref.split('/').pop().split('#')[0];
+        let linkHash = linkHref.includes('#') ? '#' + linkHref.split('#')[1] : '';
+
+        if (linkPath === currentPath) {
+            if (currentPath === 'ui.html' && linkPath === 'ui.html') {
+                if (linkHash === currentHash) {
+                    link.classList.add('active');
+                } else if (!currentHash && linkHref === 'ui.html') {
+                    link.classList.add('active');
+                }
+            } else if (!link.classList.contains('dropbtn')) {
+                link.classList.add('active');
+            }
+        }
+    });
+
+    if (worksDropbtn) {
+        if (currentPath === 'scripting.html' || currentPath === 'ui.html') {
+            worksDropbtn.classList.add('dropbtn-active');
+        }
+    }
+
     const initCarousel = (carouselElement) => {
         const slides = carouselElement.querySelectorAll('.carousel-slide');
         const prevButton = carouselElement.querySelector('.carousel-prev');
@@ -11,14 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (prevButton) prevButton.style.display = 'none';
             if (nextButton) nextButton.style.display = 'none';
             if (dotsContainer) dotsContainer.style.display = 'none';
-            return; // No slides, no carousel needed
+            return;
         }
 
         let currentSlideIndex = 0;
 
-        // Create dots
-        if (dotsContainer) { // Ensure dotsContainer exists before manipulating
-            dotsContainer.innerHTML = ''; // Clear existing dots
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
             for (let i = 0; i < slides.length; i++) {
                 const dot = document.createElement('span');
                 dot.classList.add('dot');
@@ -31,28 +65,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 dotsContainer.appendChild(dot);
             }
         }
-        const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : []; // Get dots after creation, check if dotsContainer exists
-
-        // Function to move to a specific slide
+        const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+        
         const moveToSlide = (index) => {
             if (index < 0) {
-                index = slides.length - 1; // Wrap around to end
+                index = slides.length - 1;
             } else if (index >= slides.length) {
-                index = 0; // Wrap around to start
+                index = 0;
             }
             currentSlideIndex = index;
             const slidesContainer = carouselElement.querySelector('.carousel-slides');
             if (slidesContainer) {
-                const offset = -currentSlideIndex * 100; // Calculate percentage offset
+                const offset = -currentSlideIndex * 100;
                 slidesContainer.style.transform = `translateX(${offset}%)`;
             }
 
-            // Update active dot
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlideIndex);
             });
 
-            // Handle prev/next button and dots visibility if only 1 slide
             if (slides.length <= 1) {
                 if (prevButton) prevButton.style.display = 'none';
                 if (nextButton) nextButton.style.display = 'none';
@@ -63,15 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dotsContainer) dotsContainer.style.display = 'flex';
             }
 
-            // Pause all media and reset them, then play/load current slide's media
             slides.forEach((slide, i) => {
-                const videoElement = slide.querySelector('video'); // Self-hosted video
-                const iframeElement = slide.querySelector('.video-wrapper iframe'); // YouTube iframe
+                const videoElement = slide.querySelector('video');
+                const iframeElement = slide.querySelector('.video-wrapper iframe');
 
                 if (videoElement) {
                     if (i !== currentSlideIndex) {
                         videoElement.pause();
-                        videoElement.currentTime = 0; // Reset video to start
+                        videoElement.currentTime = 0;
                     }
                 }
 
@@ -92,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Event listeners for prev/next buttons
         if (prevButton) {
             prevButton.addEventListener('click', () => moveToSlide(currentSlideIndex - 1));
         }
@@ -106,15 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
         moveToSlide(currentSlideIndex);
     };
 
-    // --- Generic Project/Content Display Logic (for full project pages like scripting.html, ui.html, vector.html) ---
     const setupShowcase = async (buttonContainerId, displayContainerId, projectPaths) => {
         const buttonContainer = document.getElementById(buttonContainerId);
         const displayContainer = document.getElementById(displayContainerId);
         const carouselsInitialized = {};
 
         if (!buttonContainer || !displayContainer) {
-            // console.warn(`Showcase containers not found: #${buttonContainerId}, #${displayContainerId}. Skipping setupShowcase.`);
-            return; // Exit if elements are not found (e.g., on index.html)
+            return;
         }
 
         const fetchPromises = projectPaths.map(path =>
@@ -158,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const slide = document.createElement('div');
                 slide.classList.add('carousel-slide');
 
-                if (mediaSrc.includes('https://www.youtube.com/embed/VIDEO_ID')) { // Check for YouTube embed URL
+                if (mediaSrc.includes('https://www.youtube.com/embed/VIDEO_ID')) {
                     const youtubeId = mediaSrc.split('/').pop().split('?')[0];
                     const videoWrapper = document.createElement('div');
                     videoWrapper.classList.add('video-wrapper');
@@ -263,7 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 }
-                // Scroll to the content if there's a hash in the URL and it matches
                 if (window.location.hash === `#${contentId}`) {
                     activeContent.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -274,37 +300,30 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => {
                 const contentId = button.dataset.project;
                 showContent(contentId);
-                // Update URL hash without page reload
                 history.pushState(null, '', `#${contentId}`);
             });
         });
 
-        // Check if there's a hash in the URL on load
         if (window.location.hash) {
             const initialContentId = window.location.hash.substring(1);
             const initialButton = buttonContainer.querySelector(`.project-button[data-project="${initialContentId}"]`);
             if (initialButton) {
                 showContent(initialContentId);
             } else if (buttons.length > 0) {
-                // If hash doesn't match a project, but there are projects, show the first one
                 showContent(buttons[0].dataset.project);
             }
         } else if (buttons.length > 0) {
-            // Otherwise, show the first project content
             showContent(buttons[0].dataset.project);
         }
     };
 
-
-    // --- NEW: Function for Home Page Previews ---
     const setupHomePreview = async (containerId, previewPaths, detailsPageUrl) => {
         const container = document.getElementById(containerId);
         if (!container) {
-            // console.warn(`Preview container not found: #${containerId}. Skipping setupHomePreview.`);
             return;
         }
 
-        container.innerHTML = ''; // Clear any placeholder content
+        container.innerHTML = '';
 
         const fetchPromises = previewPaths.map(path =>
             fetch(path)
@@ -331,52 +350,45 @@ document.addEventListener('DOMContentLoaded', () => {
             workItem.appendChild(title);
 
             const description = document.createElement('p');
-            // Truncate description for preview if too long, or use a specific preview_description field in JSON
             description.textContent = project.description.length > 100 ? project.description.substring(0, 97) + '...' : project.description;
             workItem.appendChild(description);
 
-            // Use the first media item for the preview image
             if (project.media && project.media.length > 0 && !project.media[0].includes('https://www.youtube.com/embed/VIDEO_ID') && !/\.(mp4|webm|ogg)$/i.test(project.media[0])) {
                 const img = document.createElement('img');
                 img.src = project.media[0];
                 img.alt = `${project.title} Preview`;
                 workItem.appendChild(img);
             } else if (project.media && project.media.length > 0 && project.media[0].includes('https://www.youtube.com/embed/VIDEO_ID')) {
-                // For YouTube videos, display a thumbnail if possible, or a generic video icon
                 const img = document.createElement('img');
                 const youtubeId = project.media[0].split('/').pop().split('?')[0];
-                img.src = `http://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`; // Medium quality thumbnail
+                img.src = `http://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
                 img.alt = `${project.title} Video Preview`;
                 img.style.objectFit = 'cover'; // Ensure it covers the area
                 workItem.appendChild(img);
             } else {
-                // Fallback for self-hosted videos or if no media
-                const fallbackImg = document.createElement('img');
-                fallbackImg.src = 'assets/images/placeholder-preview.jpg'; // Create a generic placeholder image
+                 const fallbackImg = document.createElement('img');
+                fallbackImg.src = 'assets/images/placeholder-preview.jpg';
                 fallbackImg.alt = 'No image preview available';
                 workItem.appendChild(fallbackImg);
             }
 
             const link = document.createElement('a');
-            link.href = `${detailsPageUrl}#${project.id}`; // Link to the specific project on the full page
+            link.href = `${detailsPageUrl}#${project.id}`;
             link.classList.add('button', 'small');
             link.textContent = 'View Details';
 
-            // Add click event to handle scrolling and loading details
             link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default anchor behavior
+                event.preventDefault();
                 const targetId = project.id;
 
-                // Navigate to the details page
                 window.location.href = link.href;
 
-                // Scroll to the showcase section after a slight delay to allow the page to load
                 setTimeout(() => {
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
                     }
-                }, 100); // Adjust the delay as necessary
+                }, 100);
             });
 
             workItem.appendChild(link);
@@ -384,8 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-
-    // --- Define paths to your project JSON files ---
     const guiProjectPaths = [
         'data/ui/project-1.json',
         'data/ui/project-2.json',
@@ -405,21 +415,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
 
-    // --- Initialize Each Showcase with Dynamic Content from JSON files ---
-    // These are for the full project pages (scripting.html, ui.html, vector.html)
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
     setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths);
     setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths); // Will work when vector.html exists
-
-
-    // --- NEW: Initialize Home Page Previews ---
-    // These are for index.html
+    
     setupHomePreview('scripting-preview-grid', scriptingProjectPaths, 'scripting.html');
     setupHomePreview('gui-preview-grid', guiProjectPaths, 'ui.html');
     setupHomePreview('vector-preview-grid', vectorProjectPaths, 'ui.html');
 
 
-    // --- Dropdown Menu Hover Delay Logic ---
     const dropdown = document.querySelector('.dropdown');
     const dropdownContent = document.querySelector('.dropdown-content');
     let dropdownTimeout;
