@@ -1,17 +1,18 @@
 {
-    "id": "unique-ui-project-id",
-    "title": "UI Project Title Here",
-    "description": "A brief, compelling description of your UI project, highlighting its purpose and key design principles.",
+    "id": "admin-panel-ui",
+    "title": "Custom Admin Panel UI Design",
+    "description": "This project showcases a custom admin panel UI, featuring a modern and responsive layout with interactive elements. The design emphasizes usability and aesthetics, making it suitable for various applications.",
     "features": [
-        "Key feature 1: e.g., Responsive layout for multiple devices",
-        "Key feature 2: e.g., Interactive elements with smooth animations",
-        "Key feature 3: e.g., Modular and reusable UI components",
-        "Key feature 4: e.g., Optimized for performance"
+        "Key feature 1: Polished and modern design with a focus on user experience",
+        "Key feature 2: Rensponsive layout that adapts to different screen sizes",
+        "Key feature 3: Smooth animations and transitions for a dynamic user experience",
+        "Key feature 4: Interactive elements such as buttons, dropdowns, and modals"
     ],
     "media": [
-        "assets/images/your-ui-project-folder/screenshot1.jpg",
-        "assets/images/your-ui-project-folder/screenshot2.png",
-        "https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID_HERE"
+        "assets/images/ui/admin-panel/admin_panel_home_page.png",
+        "assets/images/ui/admin-panel/admin_panel_gun_spawner.png",
+        "assets/images/ui/admin-panel/admin_panel_player_data_editor.png",
+        "assets/images/ui/admin-panel/admin_panel_manager.png"
     ],
     "demoLink": "#"
 }
