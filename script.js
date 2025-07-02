@@ -140,6 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const displayContainer = document.getElementById(displayContainerId);
         const carouselsInitialized = {};
 
+        console.log(buttonContainerId, displayContainerId, projectPaths);
+
         if (!buttonContainer || !displayContainer) {
             return;
         }
@@ -398,16 +400,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const guiProjectPaths = [
         'data/ui/project-1.json',
-        'data/ui/project-2.json',
-        'data/ui/project-3.json',
-        'data/ui/project-4.json'
     ];
 
     const scriptingProjectPaths = [
         'data/scripts/project-1.json',
         'data/scripts/project-2.json',
-        'data/scripts/project-3.json',
-        'data/scripts/project-4.json'
     ];
 
     const vectorProjectPaths = [
