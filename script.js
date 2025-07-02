@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
-        
+
         const moveToSlide = (index) => {
             if (index < 0) {
                 index = slides.length - 1;
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!response.ok) {
                         throw new Error(`Failed to fetch ${path}: ${response.statusText}`);
                     }
-                    
+
                     return response.json();
                 })
                 .catch(error => {
@@ -273,13 +273,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const projectDescription = document.createElement('div');
             projectDescription.classList.add('project-description');
             projectDescription.innerHTML = `
-                <h3>${project.title}</h3>
+                <div class="project-title-and-tags">
+                    <h3>${project.title}</h3>
+                    
+                    ${project.tags && project.tags.length > 0 ? `
+                    <div class="project-tags">
+                        ${project.tags.map(tag => {
+                let style = '';
+                let classes = 'tag'; // Base class for all tags
+
+                if (tag.filled) {
+                    style += `background-color: ${tag.color}; color: white;`;
+                } else if (tag.outline) {
+                    style += `border: 2px solid ${tag.color}; color: ${tag.color}; background-color: transparent;`;
+                } else {
+                    style += `background-color: #333; color: #eee;`;
+                }
+                return `<span class="${classes}" style="${style}">${tag.text}</span>`;
+            }).join(' ')}
+                    </div>
+                    ` : ''}
+                </div>
+
                 <p>${project.description}</p>
+                ${project.features && project.features.length > 0 ? `
+                <h4>Features:</h4>
                 <ul>
                     ${project.features.map(feature => `<li>${feature}</li>`).join('')}
                 </ul>
+                ` : ''}
+
                 <div class="button-center">
-                    <a href="${project.demoLink}" class="button small">View on Roblox</a>
+                    ${project.demoLink ? `<a href="${project.demoLink}" target="_blank" class="button small">View on Roblox</a>` : ''}
                 </div>
             `;
             projectContent.appendChild(projectDescription);
@@ -446,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
     setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths);
     setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths);
-    
+
     setupHomePreview('scripting-preview-grid', scriptingProjectPaths, 'scripting.html');
     setupHomePreview('gui-preview-grid', guiProjectPaths, 'ui.html');
     setupHomePreview('vector-preview-grid', vectorProjectPaths, 'ui.html');

@@ -14,5 +14,37 @@
         "assets/images/ui/admin-panel/admin_panel_player_data_editor.png",
         "assets/images/ui/admin-panel/admin_panel_manager.png"
     ],
+    "tags": [
+        {
+            "text": "Flat",
+            "filled": true,
+            "color": "#007bff",
+            "outline": false
+        },
+        {
+            "text": "Modern",
+            "filled": true,
+            "color": "#1E90FF",
+            "outline": false
+        },
+        {
+            "text": "Responsive",
+            "filled": true,
+            "color": "#3CB371",
+            "outline": false
+        },
+        {
+            "text": "Interactive",
+            "filled": true,
+            "color": "#FF8C00",
+            "outline": false
+        },
+        {
+            "text": "Sleek",
+            "filled": false,
+            "color": "#BA55D3",
+            "outline": true
+        }
+    ],
     "demoLink": "#"
 }
