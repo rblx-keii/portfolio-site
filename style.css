@@ -559,7 +559,8 @@ nav {
 
 .button.alt {
   background-color: transparent;
-  border-color: #16a34a;
+  outline: #16a34a;
+  outline-width: .1em;
 }
 
 .button.small {
