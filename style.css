@@ -558,7 +558,8 @@ nav {
 }
 
 .button.alt {
-  background-color: #4ade80;
+  background-color: transparent;
+  border-color: #16a34a;
 }
 
 .button.small {

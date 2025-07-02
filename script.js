@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     // --- Carousel Initialization Logic (Reusable) ---
     const initCarousel = (carouselElement) => {
         const slides = carouselElement.querySelectorAll('.carousel-slide');
@@ -40,13 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 index = 0; // Wrap around to start
             }
             currentSlideIndex = index;
-            // Use querySelector here as .carousel-slides is directly inside carouselElement
             const slidesContainer = carouselElement.querySelector('.carousel-slides');
             if (slidesContainer) {
                 const offset = -currentSlideIndex * 100; // Calculate percentage offset
                 slidesContainer.style.transform = `translateX(${offset}%)`;
             }
-
 
             // Update active dot
             dots.forEach((dot, i) => {
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 if (prevButton) prevButton.style.display = 'block';
                 if (nextButton) nextButton.style.display = 'block';
-                if (dotsContainer) dotsContainer.style.display = 'flex'; // Use flex to align dots
+                if (dotsContainer) dotsContainer.style.display = 'flex';
             }
 
             // Pause all media and reset them, then play/load current slide's media
@@ -78,18 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (iframeElement) {
                     const youtubeId = iframeElement.dataset.youtubeId;
-                    // Correct YouTube embed URL format
-                    const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&origin=${window.location.protocol}//${window.location.host}&autoplay=0&rel=0&modestbranding=1`;
+                    const youtubeEmbedUrl = `https://www.youtube.com/embed/VIDEO_ID${youtubeId}?enablejsapi=1&origin=${window.location.protocol}//${window.location.host}&autoplay=0&rel=0&modestbranding=1`;
 
                     if (i === currentSlideIndex) {
-                        // Load YouTube video for the current slide if it's not already loaded
                         if (iframeElement.src !== youtubeEmbedUrl) {
                             iframeElement.src = youtubeEmbedUrl;
                         }
                     } else {
-                        // Unload YouTube video for inactive slides to stop playback
-                        if (iframeElement.src) { // Only clear if src is currently set
-                            iframeElement.src = ''; // Setting src to empty string stops the video
+                        if (iframeElement.src) {
+                            iframeElement.src = '';
                         }
                     }
                 }
@@ -104,26 +100,23 @@ document.addEventListener('DOMContentLoaded', () => {
             nextButton.addEventListener('click', () => moveToSlide(currentSlideIndex + 1));
         }
 
-        // Store the carousel state and controls
-        carouselElement.dataset.currentSlideIndex = currentSlideIndex; // Store current index on the element
-        carouselElement.moveToSlide = moveToSlide; // Attach method to the element for external control
+        carouselElement.dataset.currentSlideIndex = currentSlideIndex;
+        carouselElement.moveToSlide = moveToSlide;
 
-        // Initial setup
         moveToSlide(currentSlideIndex);
     };
 
-    // --- Generic Project/Content Display Logic ---
+    // --- Generic Project/Content Display Logic (for full project pages like scripting.html, ui.html, vector.html) ---
     const setupShowcase = async (buttonContainerId, displayContainerId, projectPaths) => {
         const buttonContainer = document.getElementById(buttonContainerId);
         const displayContainer = document.getElementById(displayContainerId);
-        const carouselsInitialized = {}; // Track initialized carousels for this specific showcase
+        const carouselsInitialized = {};
 
         if (!buttonContainer || !displayContainer) {
-            console.error(`Showcase containers not found: #${buttonContainerId}, #${displayContainerId}`);
-            return;
+            // console.warn(`Showcase containers not found: #${buttonContainerId}, #${displayContainerId}. Skipping setupShowcase.`);
+            return; // Exit if elements are not found (e.g., on index.html)
         }
 
-        // Fetch all project data concurrently
         const fetchPromises = projectPaths.map(path =>
             fetch(path)
                 .then(response => {
@@ -134,32 +127,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch(error => {
                     console.error(error);
-                    return null; // Return null for failed fetches
+                    return null;
                 })
         );
 
-        // Filter out any nulls from failed fetches
         const projects = (await Promise.all(fetchPromises)).filter(p => p !== null);
 
-        // Clear existing content
         buttonContainer.innerHTML = '';
         displayContainer.innerHTML = '';
 
-        // Create buttons and project content from data
         projects.forEach((project) => {
-            // Create Button
             const button = document.createElement('button');
             button.classList.add('project-button');
             button.dataset.project = project.id;
             button.textContent = project.title;
             buttonContainer.appendChild(button);
 
-            // Create Project Content
             const projectContent = document.createElement('div');
             projectContent.id = project.id;
             projectContent.classList.add('project-content');
 
-            // Project Media (Carousel)
             const projectMedia = document.createElement('div');
             projectMedia.classList.add('project-media');
             const carouselContainer = document.createElement('div');
@@ -171,33 +158,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 const slide = document.createElement('div');
                 slide.classList.add('carousel-slide');
 
-                // Check for YouTube embed URL (simplified check, looks for 'youtube.com/embed')
-                if (mediaSrc.includes('youtube.com/embed')) {
-                    const youtubeId = mediaSrc.split('/').pop().split('?')[0]; // Extract ID from actual embed URL
+                if (mediaSrc.includes('https://www.youtube.com/embed/VIDEO_ID')) { // Check for YouTube embed URL
+                    const youtubeId = mediaSrc.split('/').pop().split('?')[0];
                     const videoWrapper = document.createElement('div');
                     videoWrapper.classList.add('video-wrapper');
                     const iframe = document.createElement('iframe');
                     iframe.setAttribute('frameborder', '0');
                     iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
                     iframe.setAttribute('allowfullscreen', '');
-                    iframe.dataset.youtubeId = youtubeId; // Store ID for loading later
+                    iframe.dataset.youtubeId = youtubeId;
                     videoWrapper.appendChild(iframe);
                     slide.appendChild(videoWrapper);
                 } else if (/\.(mp4|webm|ogg)$/i.test(mediaSrc)) {
-                    // This is a self-hosted video
                     const video = document.createElement('video');
                     video.setAttribute('controls', '');
-                    video.setAttribute('preload', 'none'); // Don't load video until needed
+                    video.setAttribute('preload', 'none');
                     const source = document.createElement('source');
                     source.setAttribute('src', mediaSrc);
-                    // Dynamically set type based on extension
                     if (mediaSrc.endsWith('.mp4')) source.setAttribute('type', 'video/mp4');
                     else if (mediaSrc.endsWith('.webm')) source.setAttribute('type', 'video/webm');
                     else if (mediaSrc.endsWith('.ogg')) source.setAttribute('type', 'video/ogg');
                     video.appendChild(source);
                     slide.appendChild(video);
                 } else {
-                    // Assume it's an image
                     const img = document.createElement('img');
                     img.setAttribute('src', mediaSrc);
                     img.setAttribute('alt', `${project.title} Screenshot ${idx + 1}`);
@@ -206,16 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 carouselSlides.appendChild(slide);
             });
 
-            if (project.media.length > 0) { // Only add carousel controls if there's any media
-                carouselContainer.appendChild(carouselSlides); // Slides container is always needed
+            if (project.media.length > 0) {
+                carouselContainer.appendChild(carouselSlides);
 
-                if (project.media.length > 1) { // Only add prev/next/dots if multiple slides
+                if (project.media.length > 1) {
                     const prevButton = document.createElement('button');
                     prevButton.classList.add('carousel-prev');
-                    prevButton.innerHTML = '&lt;'; // HTML entity for less-than
+                    prevButton.innerHTML = '&lt;';
                     const nextButton = document.createElement('button');
                     nextButton.classList.add('carousel-next');
-                    nextButton.innerHTML = '&gt;'; // HTML entity for greater-than
+                    nextButton.innerHTML = '&gt;';
                     const dotsContainer = document.createElement('div');
                     dotsContainer.classList.add('carousel-dots');
 
@@ -225,12 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-
             projectMedia.appendChild(carouselContainer);
-            // Append projectMedia directly
             projectContent.appendChild(projectMedia);
 
-            // Project Description
             const projectDescription = document.createElement('div');
             projectDescription.classList.add('project-description');
             projectDescription.innerHTML = `
@@ -248,7 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
             displayContainer.appendChild(projectContent);
         });
 
-        // Now, set up event listeners and initial display after all projects are loaded
         const buttons = buttonContainer.querySelectorAll('.project-button');
         const contents = displayContainer.querySelectorAll('.project-content');
 
@@ -256,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
             buttons.forEach(button => button.classList.remove('active'));
             contents.forEach(content => {
                 content.classList.remove('active');
-                // Pause any media in hidden content
                 content.querySelectorAll('video').forEach(video => {
                     video.pause();
                     video.currentTime = 0;
@@ -280,11 +258,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         initCarousel(carouselElement);
                         carouselsInitialized[contentId] = true;
                     } else {
-                        // If carousel was already initialized, reset it to the first slide
                         if (carouselElement.moveToSlide) {
                             carouselElement.moveToSlide(0);
                         }
                     }
+                }
+                // Scroll to the content if there's a hash in the URL and it matches
+                if (window.location.hash === `#${contentId}`) {
+                    activeContent.scrollIntoView({ behavior: 'smooth' });
                 }
             }
         };
@@ -293,50 +274,160 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => {
                 const contentId = button.dataset.project;
                 showContent(contentId);
+                // Update URL hash without page reload
+                history.pushState(null, '', `#${contentId}`);
             });
         });
 
-        // Initialize the first project's content on page load for this showcase
-        if (buttons.length > 0) {
+        // Check if there's a hash in the URL on load
+        if (window.location.hash) {
+            const initialContentId = window.location.hash.substring(1);
+            const initialButton = buttonContainer.querySelector(`.project-button[data-project="${initialContentId}"]`);
+            if (initialButton) {
+                showContent(initialContentId);
+            } else if (buttons.length > 0) {
+                // If hash doesn't match a project, but there are projects, show the first one
+                showContent(buttons[0].dataset.project);
+            }
+        } else if (buttons.length > 0) {
+            // Otherwise, show the first project content
             showContent(buttons[0].dataset.project);
         }
     };
 
+
+    // --- NEW: Function for Home Page Previews ---
+    const setupHomePreview = async (containerId, previewPaths, detailsPageUrl) => {
+        const container = document.getElementById(containerId);
+        if (!container) {
+            // console.warn(`Preview container not found: #${containerId}. Skipping setupHomePreview.`);
+            return;
+        }
+
+        container.innerHTML = ''; // Clear any placeholder content
+
+        const fetchPromises = previewPaths.map(path =>
+            fetch(path)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch preview ${path}: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error(error);
+                    return null;
+                })
+        );
+
+        const projects = (await Promise.all(fetchPromises)).filter(p => p !== null);
+
+        projects.forEach(project => {
+            const workItem = document.createElement('div');
+            workItem.classList.add('work-item');
+
+            const title = document.createElement('h3');
+            title.textContent = project.title;
+            workItem.appendChild(title);
+
+            const description = document.createElement('p');
+            // Truncate description for preview if too long, or use a specific preview_description field in JSON
+            description.textContent = project.description.length > 100 ? project.description.substring(0, 97) + '...' : project.description;
+            workItem.appendChild(description);
+
+            // Use the first media item for the preview image
+            if (project.media && project.media.length > 0 && !project.media[0].includes('https://www.youtube.com/embed/VIDEO_ID') && !/\.(mp4|webm|ogg)$/i.test(project.media[0])) {
+                const img = document.createElement('img');
+                img.src = project.media[0];
+                img.alt = `${project.title} Preview`;
+                workItem.appendChild(img);
+            } else if (project.media && project.media.length > 0 && project.media[0].includes('https://www.youtube.com/embed/VIDEO_ID')) {
+                // For YouTube videos, display a thumbnail if possible, or a generic video icon
+                const img = document.createElement('img');
+                const youtubeId = project.media[0].split('/').pop().split('?')[0];
+                img.src = `http://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`; // Medium quality thumbnail
+                img.alt = `${project.title} Video Preview`;
+                img.style.objectFit = 'cover'; // Ensure it covers the area
+                workItem.appendChild(img);
+            } else {
+                // Fallback for self-hosted videos or if no media
+                const fallbackImg = document.createElement('img');
+                fallbackImg.src = 'assets/images/placeholder-preview.jpg'; // Create a generic placeholder image
+                fallbackImg.alt = 'No image preview available';
+                workItem.appendChild(fallbackImg);
+            }
+
+
+            const link = document.createElement('a');
+            link.href = `${detailsPageUrl}#${project.id}`; // Link to the specific project on the full page
+            link.classList.add('button', 'small');
+            link.textContent = 'View Details';
+            workItem.appendChild(link);
+
+            container.appendChild(workItem);
+        });
+    };
+
+
     // --- Define paths to your project JSON files ---
     const guiProjectPaths = [
-        // Example paths - update with your actual UI project paths
         'data/ui/project-1.json',
         'data/ui/project-2.json',
         'data/ui/project-3.json',
         'data/ui/project-4.json'
     ];
 
-    const vectorProjectPaths = [
-        // Example paths - update with your actual Vector project paths
-        'data/vector/project-1.json',
-    ];
-
     const scriptingProjectPaths = [
-        // Add all your Scripting project JSON paths here
         'data/scripts/project-1.json',
         'data/scripts/project-2.json',
         'data/scripts/project-3.json',
         'data/scripts/project-4.json'
     ];
 
+    const vectorProjectPaths = [
+        'data/vector/vector-1.json',
+        'data/vector/vector-2.json',
+        'data/vector/vector-3.json'
+    ];
+
+
+    // --- NEW: Define paths for Home Page Previews (subset of full lists) ---
+    // You can choose which projects to feature on the home page preview
+    const scriptingPreviewPaths = [
+        'data/scripts/project-1.json', // Example: Project Skyblock
+        'data/scripts/project-2.json'  // Example: Simulator X
+    ];
+
+    const guiPreviewPaths = [
+        'data/ui/project-1.json', // Example: Modern UI Pack
+        'data/ui/project-2.json'  // Example: Game Menu Redesign
+    ];
+
+    const vectorPreviewPaths = [
+        'data/vector/vector-1.json', // Example: Abstract Shapes Pack
+        'data/vector/vector-2.json'  // Example: Another Vector project
+    ];
+
 
     // --- Initialize Each Showcase with Dynamic Content from JSON files ---
-    // These calls will fetch data and build the showcases when the page loads.
+    // These are for the full project pages (scripting.html, ui.html, vector.html)
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
-    setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths);
-    setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths); // New for scripting!
+    setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths);
+    setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths); // Will work when vector.html exists
+
+
+    // --- NEW: Initialize Home Page Previews ---
+    // These are for index.html
+    setupHomePreview('scripting-preview-grid', scriptingPreviewPaths, 'scripting.html');
+    setupHomePreview('gui-preview-grid', guiPreviewPaths, 'ui.html');
+    setupHomePreview('vector-preview-grid', vectorPreviewPaths, 'vector.html');
 
 
     // --- Dropdown Menu Hover Delay Logic ---
     const dropdown = document.querySelector('.dropdown');
     const dropdownContent = document.querySelector('.dropdown-content');
     let dropdownTimeout;
-    const delay = 50; // 50ms delay
+    const delay = 50;
 
     if (dropdown && dropdownContent) {
         dropdown.addEventListener('mouseenter', () => {
