@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isMouseOverHeader = false;
         let isHeaderHidden = false;
         let lastScrollYWhenHidden = 0;
-        const scrollThresholdFraction = 0.25;
+        const hide_delay = 500;
 
         // --- Helper Functions ---
 
@@ -537,13 +537,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         header.addEventListener('mouseleave', () => {
             isMouseOverHeader = false;
-            scrollTimeout = setTimeout(hideHeader, 1000);
+            scrollTimeout = setTimeout(hideHeader, hide_delay);
         });
 
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
             const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-            const scrollThreshold = viewportHeight * scrollThresholdFraction;
+            const scrollThreshold = viewportHeight/2.5;
 
             if (currentScrollY === 0) {
                 showHeader();
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(hideHeader, 1000);
+            scrollTimeout = setTimeout(hideHeader, hide_delay);
         });
 
         if (window.scrollY === 0) {
