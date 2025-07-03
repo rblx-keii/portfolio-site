@@ -500,34 +500,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto-hide header on scroll stop
     const header = document.querySelector('header');
+
     if (header) {
         let scrollTimeout;
         let isMouseOverHeader = false;
+        let isHeaderHidden = false;
+        let lastScrollYWhenHidden = 0;
+        const scrollThresholdFraction = 0.25;
 
-        const hideHeader = () => {
-            // Don't hide if we are at the top of the page OR if the mouse is over the header
-            if (window.scrollY > 0 && !isMouseOverHeader) {
-                header.style.top = `-${header.offsetHeight}px`;
+        // --- Helper Functions ---
+
+        const showHeader = () => {
+            if (header.style.top !== '0px') {
+                header.style.top = '0';
+                isHeaderHidden = false;
             }
         };
 
+        const hideHeader = () => {
+            if (window.scrollY > 0 && !isMouseOverHeader) {
+                if (header.style.top !== `-${header.offsetHeight}px`) {
+                    header.style.top = `-${header.offsetHeight}px`;
+                    isHeaderHidden = true;
+                    lastScrollYWhenHidden = window.scrollY;
+                }
+            }
+        };
+
+        // --- Event Listeners ---
+
         header.addEventListener('mouseenter', () => {
             isMouseOverHeader = true;
-            clearTimeout(scrollTimeout); // Keep header visible while hovering
+            clearTimeout(scrollTimeout);
+            showHeader();
         });
 
         header.addEventListener('mouseleave', () => {
             isMouseOverHeader = false;
-            // After the mouse leaves, set a timeout to hide it again if scrolling has stopped
             scrollTimeout = setTimeout(hideHeader, 1000);
         });
 
         window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimeout);
-            header.style.top = '0'; // Show header immediately on any scroll activity
+            const currentScrollY = window.scrollY;
+            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            const scrollThreshold = viewportHeight * scrollThresholdFraction;
 
-            // Set a timeout to hide the header after 1000ms of inactivity
+            if (currentScrollY === 0) {
+                showHeader();
+                clearTimeout(scrollTimeout);
+                return;
+            }
+
+            if (isHeaderHidden && !isMouseOverHeader) {
+                const scrollDelta = Math.abs(currentScrollY - lastScrollYWhenHidden);
+
+                if (scrollDelta >= scrollThreshold) {
+                    showHeader();
+                }
+            }
+
+            clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(hideHeader, 1000);
         });
+
+        if (window.scrollY === 0) {
+            showHeader();
+        } else {
+            setTimeout(hideHeader, 100);
+        }
     }
 });
