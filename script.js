@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth' });
                     }
-                }, 100);
+                }, 500);
             });
 
             workItem.appendChild(link);
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isMouseOverHeader = false;
         let isHeaderHidden = false;
         let lastScrollYWhenHidden = 0;
-        const hide_delay = 500;
+        const hide_delay = 1000;
 
         // --- Helper Functions ---
 

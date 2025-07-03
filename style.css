@@ -225,9 +225,17 @@ header {
 	margin-right: 0.4em;
 }
 
+/* === PREVIEW BUTTONS === */
+.work-preview-buttons {
+	display: flex;
+	gap: 1rem;
+	justify-content: center;
+	margin-top: 2rem;
+}
+
 /* === GENERAL SECTIONS === */
 .section {
-	padding: 1.5rem .5rem;
+	padding: 1.5rem 1rex;
 	max-width: 1200px;
 	margin: 0 auto;
 	text-align: center;
@@ -236,8 +244,9 @@ header {
 .section hr {
 	border: none;
 	border-top: 1px solid #333;
-	margin: 2rem auto;
-	width: 80%;
+	margin: 2rem;
+	width: 100%;
+	max-width: 100%;
 }
 
 .section h2 {
@@ -314,7 +323,7 @@ header {
 
 .gap-separator {
 	display: block;
-	margin: 2.5em auto;
+	height: 1rem;
 	width: 100%;
 	background: transparent;
 }
@@ -853,6 +862,7 @@ footer {
 
 	.hero-right {
 		max-width: 100%;
+		margin-bottom: .5rem;
 	}
 
 	.footer-buttons {
