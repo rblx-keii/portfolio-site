@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ` : ''}
 
                 <div class="button-center">
-                    ${project.demoLink ? `<a href="${project.demoLink}" target="_blank" class="button small">View on Roblox</a>` : ''}
+                    ${ `<a href="pricing.html" target="_blank" class="button small">Check Pricing</a>`}
                 </div>
             `;
             projectContent.appendChild(projectDescription);
