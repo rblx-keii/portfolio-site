@@ -693,6 +693,102 @@ header {
 	}
 }
 
+/* === CONTACT ME === */
+.contact-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	max-width: 500px;
+	margin: 2rem auto;
+	text-align: left;
+}
+
+.contact-form input,
+.contact-form textarea {
+	background-color: #1a1a1a;
+	color: white;
+	width: 100%;
+	padding: 0.75rem 1rem;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 1.05rem;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+	outline: none;
+	border-color: #4ade80;
+	box-shadow: 0 0 0 2px rgba(72, 187, 120, 0.2);
+}
+
+.contact-form .button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+}
+
+.contact-response {
+	margin-top: 1rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.contact-response.hidden {
+	display: none;
+}
+
+.service-container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.service-select {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.service-select select {
+	padding: 1rem;
+	font-size: 1rem;
+	width: 100%;
+	background-color: #1a1a1a;
+	color: white;
+	border-radius: 6px;
+	flex: 1;
+	appearance: none;
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23ccc' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 1rem center;
+	background-size: 1.25rem;
+}
+
+.service-select select:focus {
+	outline: none;
+	border-color: #4ade80;
+	box-shadow: 0 0 0 2px rgba(72, 187, 120, 0.2);
+}
+
+.service-select label {
+	font-weight: bold;
+	color: #ccc;
+	margin-bottom: 0.5rem;
+	display: block;
+}
+
+.remove-service {
+	padding: 0.45rem 0.75rem;
+	line-height: 1;
+	font-weight: bold;
+	border-radius: 0.5rem;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 /* === BUTTONS === */
 .button {
 	display: inline-flex;

@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scripting | rblx-keii</title>
+    <meta name="author" content="rblx-keii" />
+    <meta name="description" content="Contact rblx-keii | Roblox Scripting & UI Portfolio" />
+    <title>Contact Me | rblx-keii</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
 </head>
 
 <body>
@@ -33,53 +35,38 @@
             </nav>
         </header>
 
-        <main class="content">
-            <h2 class="section-title">
-                <img src="assets/icons/scripting.svg" class="icon" alt="Scripting"> Scripting Works
-            </h2>
+        <main class="section">
+            <h2>Contact Me</h2>
+            <p>If you have a project or want to get in touch, feel free to send a message below.</p>
 
-            <section class="capability-section">
-                <div class="capability-column">
-                    <h3><img src="assets/icons/check.svg" class="icon"> What I Can Do</h3>
-                    <ul>
-                        <li>Simulator systems (Trading, Inventory, Egg & Pet Systems, etc.)</li>
-                        <li>UI logic & animation using TweenService</li>
-                        <li>Leaderstats, gamepasses, and dev product systems</li>
-                        <li>Persistent data with ProfileStore / ProfileService</li>
-                        <li>Region handling via ZonePlus</li>
-                        <li>Dynamic topbar buttons using TopbarPlus</li>
-                    </ul>
-                </div>
-                <div class="capability-column">
-                    <h3><img src="assets/icons/cancel.svg" class="icon"> What I Can't Do (Yet)</h3>
-                    <ul>
-                        <li>AI systems or advanced pathfinding</li>
-                        <li>Physics-based mechanics (e.g. car suspensions)</li>
-                        <li>Anything that takes up too much PC resources</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section class="description-block">
-                <h3><img src="assets/icons/framework.svg" class="icon"> Public Modules Used</h3>
-                <p>ProfileService / ProfileStore, ZonePlus, TopbarPlus, DataStore2.</p>
-
-                <h3><img src="assets/icons/framework.svg" class="icon"> Frameworks</h3>
-                <ul>
-                    <li><strong>Simple Modular Framework</strong> – used by default for all commissions</li>
-                    <li><strong>Knit Framework</strong> – optional upon request (+ extra fee)</li>
-                </ul>
-            </section>
-
-            <section id="past-projects" class="section">
-                <hr>
-                <h2>Past Projects</h2>
-                <div class="project-buttons-container" id="scripting-project-buttons">
+            <form id="contactForm" class="contact-form">
+                <label for="service-container">Select Service(s):</label>
+                <div id="service-container" class="service-container">
+                    <div class="service-select">
+                        <select>
+                            <option disabled selected value="">Choose a service</option>
+                            <option value="Scripting">Scripting</option>
+                            <option value="GUI">GUI</option>
+                            <option value="Vector">Vector</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <a class="button alt">
+                            <span>X</span>
+                        </a>
                     </div>
+                </div>
 
-                <div class="project-display" id="scripting-project-display">
-                    </div>
-            </section>
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="email" name="email" placeholder="Your Contact Info" required />
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <div class="button-container" name="submit">
+                    <a class="button">
+                        <img src="assets/icons/send.svg" class="icon" alt="Send Message"> <span>Send Message</span>
+                    </a>
+                </div>
+            </form>
+
+            <p id="contactResponse" class="contact-response hidden"></p>
         </main>
 
         <footer id="contact">
@@ -106,9 +93,9 @@
             </div>
             <p>&copy; 2025 rblx-keii. All rights reserved.</p>
         </footer>
-
-        <script src="script.js"></script>
     </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

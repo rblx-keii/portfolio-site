@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ` : ''}
 
                 <div class="button-center">
-                    ${ `<a href="pricing.html" target="_blank" class="button small">Check Pricing</a>`}
+                    ${`<a href="pricing.html" target="_blank" class="button small">Check Pricing</a>`}
                 </div>
             `;
             projectContent.appendChild(projectDescription);
@@ -543,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
             const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-            const scrollThreshold = viewportHeight/2.5;
+            const scrollThreshold = viewportHeight / 2.5;
 
             if (currentScrollY === 0) {
                 showHeader();
@@ -569,4 +569,129 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(hideHeader, 100);
         }
     }
+
+    const container = document.getElementById("service-container");
+    const contactForm = document.getElementById("contactForm");
+    const response = document.getElementById("contactResponse");
+
+    const allOptions = ["Scripting", "GUI", "Vector", "Others"];
+
+    // 🔁 Rebuild all dropdowns' options to avoid duplicates
+    function updateDropdownOptions() {
+        const selects = container.querySelectorAll("select");
+        const selectedValues = getSelectedValues();
+
+        selects.forEach((select) => {
+            const currentValue = select.value;
+
+            select.innerHTML = `<option disabled ${!currentValue ? "selected" : ""} value="">Choose a service</option>`;
+
+            allOptions.forEach(opt => {
+                if (!selectedValues.includes(opt) || opt === currentValue) {
+                    const option = document.createElement("option");
+                    option.value = opt;
+                    option.textContent = opt;
+                    if (opt === currentValue) option.selected = true;
+                    select.appendChild(option);
+                }
+            });
+        });
+    }
+
+    // 🧩 Create a dropdown (no X button initially)
+    function generateSelectHTML(options) {
+        const opts = options.map(opt => `<option value="${opt}">${opt}</option>`).join("");
+        return `
+    <div class="service-select">
+      <select>
+        <option disabled selected value="">Choose a service</option>
+        ${opts}
+      </select>
+    </div>
+  `;
+    }
+
+    // 🧼 Collect selected values
+    function getSelectedValues() {
+        return Array.from(container.querySelectorAll("select"))
+            .map(select => select.value)
+            .filter(val => val && val !== "");
+    }
+
+    // ➕ Handle dropdown change
+    container.addEventListener("change", (e) => {
+        if (e.target.tagName !== "SELECT") return;
+
+        const selectedValues = getSelectedValues();
+        const currentWrapper = e.target.closest(".service-select");
+
+        // Add remove button if not present and value is selected
+        if (
+            e.target.value &&
+            !currentWrapper.querySelector(".remove-service")
+        ) {
+            const removeBtn = document.createElement("a");
+            removeBtn.className = "button alt remove-service";
+            removeBtn.innerHTML = "<span>X</span>";
+            currentWrapper.appendChild(removeBtn);
+        }
+
+        // Add new dropdown if this is the last one
+        const allSelects = Array.from(container.querySelectorAll(".service-select"));
+        const isLast = currentWrapper === allSelects[allSelects.length - 1];
+        const availableOptions = allOptions.filter(opt => !selectedValues.includes(opt));
+
+        if (isLast && availableOptions.length > 0) {
+            container.insertAdjacentHTML("beforeend", generateSelectHTML(availableOptions));
+        }
+
+        updateDropdownOptions();
+    });
+
+    // ❌ Handle clicking remove button
+    container.addEventListener("click", (e) => {
+        const removeBtn = e.target.closest(".remove-service");
+        if (!removeBtn) return;
+
+        const wrapper = removeBtn.closest(".service-select");
+        const select = wrapper.querySelector("select");
+        const allSelects = Array.from(container.querySelectorAll(".service-select"));
+
+        if (wrapper === allSelects[0]) {
+            // First dropdown: reset and remove all others
+            select.selectedIndex = 0;
+            allSelects.slice(1).forEach(el => el.remove());
+            removeBtn.remove();
+        } else {
+            wrapper.remove();
+        }
+
+        updateDropdownOptions();
+    });
+
+    // 📨 Handle form submission
+    contactForm.addEventListener("submit", (e) => {
+        const selected = getSelectedValues();
+
+        if (selected.length === 0) {
+            e.preventDefault();
+            response.classList.remove("hidden");
+            response.textContent = "❗ Please select at least one service.";
+            return;
+        }
+
+        response.classList.add("hidden");
+
+        // 🔐 Hook this up to backend/Discord later
+        // const formData = {
+        //   name: contactForm.name.value,
+        //   email: contactForm.email.value,
+        //   message: contactForm.message.value,
+        //   services: selected
+        // };
+    });
+
+    // 🚀 Initialize with the first dropdown
+    container.innerHTML = generateSelectHTML(allOptions);
+
 });
