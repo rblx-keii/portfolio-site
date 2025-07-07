@@ -57,12 +57,13 @@
                 </div>
 
                 <input type="text" name="name" placeholder="Your Name" required />
-                <input type="email" name="email" placeholder="Your Contact Info" required />
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                <div class="button-container" name="submit">
-                    <a class="button">
-                        <img src="assets/icons/send.svg" class="icon" alt="Send Message"> <span>Send Message</span>
-                    </a>
+                <input type="text" name="email" placeholder="Your Contact Info (Discord/X username or email)" required />
+                <textarea id="messageField" name="message" rows="15" placeholder="Your Message" required></textarea>
+                <div class="button-container">
+                    <button type="submit" class="button">
+                        <img src="assets/icons/send.svg" class="icon" alt="Send Message">
+                        <span>Send Message</span>
+                    </button>
                 </div>
             </form>
 

@@ -576,7 +576,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const allOptions = ["Scripting", "GUI", "Vector", "Others"];
 
-    // 🔁 Rebuild all dropdowns' options to avoid duplicates
     function updateDropdownOptions() {
         const selects = container.querySelectorAll("select");
         const selectedValues = getSelectedValues();
@@ -598,7 +597,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 🧩 Create a dropdown (no X button initially)
     function generateSelectHTML(options) {
         const opts = options.map(opt => `<option value="${opt}">${opt}</option>`).join("");
         return `
@@ -611,14 +609,12 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
     }
 
-    // 🧼 Collect selected values
     function getSelectedValues() {
         return Array.from(container.querySelectorAll("select"))
             .map(select => select.value)
             .filter(val => val && val !== "");
     }
 
-    // ➕ Handle dropdown change
     container.addEventListener("change", (e) => {
         if (e.target.tagName !== "SELECT") return;
 
@@ -646,9 +642,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateDropdownOptions();
+        updateMessageFieldState();
     });
 
-    // ❌ Handle clicking remove button
     container.addEventListener("click", (e) => {
         const removeBtn = e.target.closest(".remove-service");
         if (!removeBtn) return;
@@ -667,10 +663,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateDropdownOptions();
+        updateMessageFieldState();
     });
 
-    // 📨 Handle form submission
-    contactForm.addEventListener("submit", (e) => {
+    contactForm.addEventListener("submit", (a) => {
         const selected = getSelectedValues();
 
         if (selected.length === 0) {
@@ -682,7 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         response.classList.add("hidden");
 
-        // 🔐 Hook this up to backend/Discord later
+        // Hook this up to backend/Discord later
         // const formData = {
         //   name: contactForm.name.value,
         //   email: contactForm.email.value,
@@ -691,7 +687,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // };
     });
 
+    function updateMessageFieldState() {
+        const messageField = document.getElementById("messageField");
+        const selected = getSelectedValues();
+
+        messageField.disabled = selected.length === 0;
+        messageField.placeholder = selected.length === 0
+            ? "Please select a service first."
+            : "Your Message";
+    }
+
     // 🚀 Initialize with the first dropdown
     container.innerHTML = generateSelectHTML(allOptions);
-
+    updateMessageFieldState();
 });
