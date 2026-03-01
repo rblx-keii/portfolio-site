@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ` : ''}
 
                 <div class="button-center">
-                    ${`<a href="pricing.html" target="_blank" class="button small">Check Pricing</a>`}
+                    ${`<a href="pricing.html" class="button small">Check Pricing</a>`}
                 </div>
             `;
             projectContent.appendChild(projectDescription);
