@@ -85,6 +85,7 @@ export function initContactForm() {
             email: contactForm.email.value,
             message: contactForm.message.value,
             services: selected.join(", "),
+            bot_field: document.getElementById("bot_field").value, // Honeypot field
             // Formatted string for your Worker to handle easily
             fullContent: `**New Inquiry!**\n**From:** ${contactForm.name.value}\n**Email:** ${contactForm.email.value}\n**Services:** ${selected.join(", ")}\n**Message:** ${contactForm.message.value}`
         };
