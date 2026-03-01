@@ -1,0 +1,48 @@
+{
+    "id": "my-first-vector-pack",
+    "title": "Awesome Vector Icons",
+    "description": "This is a pack of custom vector icons I designed for a recent project. They are clean, modern, and scalable for any use case.",
+    "features": [
+        "Includes 20 unique icons",
+        "Provided in SVG and PNG formats",
+        "Fully editable colors and strokes",
+        "Perfect for web and game UI"
+    ],
+    "media": [
+        "assets/images/vectors/pack1_preview.png",
+        "assets/images/vectors/icon_detail.svg"
+    ],
+    "tags": [ 
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        },
+        {
+            "text": "Undefined",
+            "filled": false,
+            "color": "#c2c2c2",
+            "outline": true
+        }
+    ],
+    "demoLink": "https://www.roblox.com/games/..."
+}

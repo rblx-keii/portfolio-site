@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="rblx-keii" />
+    <meta name="description" content="Contact rblx-keii | Roblox Scripting & UI Portfolio" />
+    <title>Contact Me | rblx-keii</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="assets/icons/icon.svg" alt="Logo" class="logo-icon" />
+                    <span>rblx-keii</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="scripting.html" class="dropbtn">Works ▾</a>
+                        <ul class="dropdown-content">
+                            <li><a href="scripting.html">Scripting</a></li>
+                            <li><a href="ui.html">GUI</a></li>
+                            <li><a href="ui.html#vector-project-buttons">Vector Design</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="section">
+            <h2>Contact Me</h2>
+            <p>If you have a project or want to get in touch, feel free to send a message below.</p>
+
+            <form id="contactForm" class="contact-form">
+                <label for="service-container">Select Service(s):</label>
+                <div id="service-container" class="service-container">
+                    <div class="service-select">
+                        <select>
+                            <option disabled selected value="">Choose a service</option>
+                            <option value="Scripting">Scripting</option>
+                            <option value="GUI">GUI</option>
+                            <option value="Vector">Vector</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <a class="button alt">
+                            <span>X</span>
+                        </a>
+                    </div>
+                </div>
+
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="text" name="email" placeholder="Your Contact Info (Discord/X username or email)" required />
+                <textarea id="messageField" name="message" rows="15" placeholder="Your Message" required></textarea>
+                <div class="button-container">
+                    <button type="submit" class="button">
+                        <img src="assets/icons/send.svg" class="icon" alt="Send Message">
+                        <span>Send Message</span>
+                    </button>
+                </div>
+            </form>
+
+            <p id="contactResponse" class="contact-response hidden"></p>
+        </main>
+
+        <footer id="contact">
+            <p class="footer-title">Got a project or need a UI designer?</p>
+            <p class="footer-subtitle">Feel free to reach out!</p>
+            <p class="contact-info">Contact me via Twitter, Discord or email for inquiries.</p>
+            <div class="footer-buttons">
+                <a href="https://x.com/rblx_keii" class="button small">
+                    <img src="assets/icons/twitter.svg" class="icon" alt="Twitter">
+                    <span>Twitter</span>
+                </a>
+                <a href="https://discord.com/users/280513546238951424" target="_blank" class="button small">
+                    <img src="assets/icons/discord.svg" class="icon" alt="Discord">
+                    <span>Discord</span>
+                </a>
+                <a href="https://github.com/rblx-keii" target="_blank" class="button small">
+                    <img src="assets/icons/github.svg" class="icon" alt="GitHub">
+                    <span>GitHub</span>
+                </a>
+                <a href="mailto:official.keii@outlook.com" class="button small">
+                    <img src="assets/icons/mail.svg" class="icon" alt="Email">
+                    <span>Email</span>
+                </a>
+            </div>
+            <p>&copy; 2025 rblx-keii. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
