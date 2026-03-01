@@ -12,6 +12,10 @@ export async function setupShowcase(buttonContainerId, displayContainerId, proje
 
     const projects = await fetchProjects(projectPaths);
 
+    const section = buttonContainer.closest('section') || displayContainer.closest('section');
+    if (section) section.classList.toggle('hidden', projects.length === 0);
+    if (projects.length === 0) return;
+
     buttonContainer.innerHTML = '';
     displayContainer.innerHTML = '';
 
@@ -129,6 +133,10 @@ export async function setupHomePreview(containerId, previewPaths, detailsPageUrl
     container.innerHTML = '';
 
     const projects = await fetchProjects(previewPaths);
+
+    const section = container.closest('section');
+    if (section) section.classList.toggle('hidden', projects.length === 0);
+    if (projects.length === 0) return;
 
     projects.forEach(project => {
         const workItem = document.createElement('div');

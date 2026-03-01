@@ -241,6 +241,10 @@ header {
 	text-align: center;
 }
 
+section.hidden {
+	display: none;
+}
+
 .section hr {
 	border: none;
 	border-top: 1px solid #333;
