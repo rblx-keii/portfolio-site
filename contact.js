@@ -2,6 +2,7 @@
 // Handles: service selector dropdowns and contact form submission
 
 const ALL_OPTIONS = ["Scripting", "GUI", "Vector", "Others"];
+const WORKER_URL = "https://discord-proxy.john-regado.workers.dev"; // Your Cloudflare Worker
 
 export function initContactForm() {
     const container = document.getElementById("service-container");
@@ -59,29 +60,62 @@ export function initContactForm() {
         updateMessageFieldState(container);
     });
 
-    contactForm.addEventListener("submit", (e) => {
+    // ─── Modified Submit Logic ──────────────────────────────────────────────
+    contactForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Stop page reload
+        
         const selected = getSelectedValues(container);
+        const submitBtn = contactForm.querySelector('input[type="submit"]');
 
         if (selected.length === 0) {
-            e.preventDefault();
             responseEl.classList.remove("hidden");
+            responseEl.style.color = "#ff4d4d";
             responseEl.textContent = "❗ Please select at least one service.";
             return;
         }
 
-        responseEl.classList.add("hidden");
+        // Show loading state
+        responseEl.classList.remove("hidden");
+        responseEl.style.color = "inherit";
+        responseEl.textContent = "⏳ Sending message...";
+        if (submitBtn) submitBtn.disabled = true;
 
-        // Hook this up to backend/Discord later
-        // const formData = {
-        //   name: contactForm.name.value,
-        //   email: contactForm.email.value,
-        //   message: contactForm.message.value,
-        //   services: selected
-        // };
+        const formData = {
+            name: contactForm.name.value,
+            email: contactForm.email.value,
+            message: contactForm.message.value,
+            services: selected.join(", "),
+            // Formatted string for your Worker to handle easily
+            fullContent: `**New Inquiry!**\n**From:** ${contactForm.name.value}\n**Email:** ${contactForm.email.value}\n**Services:** ${selected.join(", ")}\n**Message:** ${contactForm.message.value}`
+        };
+
+        try {
+            const response = await fetch(WORKER_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: formData.fullContent }) 
+            });
+
+            if (response.ok) {
+                responseEl.textContent = "✅ Message sent successfully!";
+                contactForm.reset();
+                // Reset dropdowns
+                container.innerHTML = generateSelectHTML(ALL_OPTIONS);
+                updateMessageFieldState(container);
+            } else {
+                throw new Error("Worker responded with an error.");
+            }
+        } catch (error) {
+            console.error("Submission error:", error);
+            responseEl.style.color = "#ff4d4d";
+            responseEl.textContent = "❌ Failed to send. Please try again later.";
+        } finally {
+            if (submitBtn) submitBtn.disabled = false;
+        }
     });
 }
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
+// ─── Helpers (Stay the same) ────────────────────────────────────────────────
 
 function generateSelectHTML(options) {
     const opts = options.map(opt => `<option value="${opt}">${opt}</option>`).join("");
@@ -107,22 +141,21 @@ function updateDropdownOptions(container) {
 
     selects.forEach((select) => {
         const currentValue = select.value;
+        const available = ALL_OPTIONS.filter(opt => !selectedValues.includes(opt) || opt === currentValue);
+        
         select.innerHTML = `<option disabled ${!currentValue ? "selected" : ""} value="">Choose a service</option>`;
-
-        ALL_OPTIONS.forEach(opt => {
-            if (!selectedValues.includes(opt) || opt === currentValue) {
-                const option = document.createElement("option");
-                option.value = opt;
-                option.textContent = opt;
-                if (opt === currentValue) option.selected = true;
-                select.appendChild(option);
-            }
+        available.forEach(opt => {
+            const option = document.createElement("option");
+            option.value = opt;
+            option.textContent = opt;
+            if (opt === currentValue) option.selected = true;
+            select.appendChild(option);
         });
     });
 }
 
 function updateMessageFieldState(container) {
-    const messageField = document.getElementById("messageField");
+    const messageField = document.getElementById("message"); // Changed from messageField to match typical form IDs
     if (!messageField) return;
 
     const selected = getSelectedValues(container);
