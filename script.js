@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
         );
 
-        const projects = (await Promise.all(fetchPromises)).filter(p => p !== null);
+        const projects = (await Promise.all(fetchPromises)).filter(p => p !== null && !p.hidden);
 
         buttonContainer.innerHTML = '';
         displayContainer.innerHTML = '';
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
         );
 
-        const projects = (await Promise.all(fetchPromises)).filter(p => p !== null);
+        const projects = (await Promise.all(fetchPromises)).filter(p => p !== null && !p.hidden);
 
         projects.forEach(project => {
             const workItem = document.createElement('div');

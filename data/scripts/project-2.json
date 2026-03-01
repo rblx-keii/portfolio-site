@@ -12,5 +12,6 @@
         "assets/images/simulator-x/image1.jpg",
         "assets/images/simulator-x/image2.jpg"
     ],
-    "demoLink": "#"
+    "demoLink": "#",
+    "hidden": true
 }
