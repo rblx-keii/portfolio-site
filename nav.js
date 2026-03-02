@@ -72,6 +72,23 @@ function initUiScrollActiveLink(currentPath) {
     };
 
     window.addEventListener('scroll', handleUiScroll, { passive: true });
+
+    // Watch for the 'hidden' class to be added, then disable scroll detection
+    const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                if (mutation.target.classList.contains('hidden')) {
+                    window.removeEventListener('scroll', handleUiScroll);
+                    // Ensure the main GUI link is active and vector is not
+                    guiLink.classList.add('active');
+                    vectorLink.classList.remove('active');
+                    observer.disconnect(); // Clean up the observer
+                }
+            }
+        }
+    });
+
+    observer.observe(vectorShowcaseSection, { attributes: true });
 }
 
 function initSidebar() {

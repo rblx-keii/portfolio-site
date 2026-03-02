@@ -13,7 +13,15 @@ export async function setupShowcase(buttonContainerId, displayContainerId, proje
     const projects = await fetchProjects(projectPaths);
 
     const section = buttonContainer.closest('section') || displayContainer.closest('section');
-    if (section) section.classList.toggle('hidden', projects.length === 0);
+    if (section) {
+        const isHidden = projects.length === 0;
+        section.classList.toggle('hidden', isHidden);
+
+        if (isHidden && buttonContainerId === 'vector-project-buttons') {
+            const vectorNavLink = document.querySelector('.nav-links a[href*="#vector-design-showcase"]');
+            if (vectorNavLink) vectorNavLink.parentElement.style.display = 'none';
+        }
+    }
     if (projects.length === 0) return;
 
     buttonContainer.innerHTML = '';
