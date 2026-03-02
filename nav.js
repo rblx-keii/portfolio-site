@@ -96,6 +96,7 @@ function initSidebar() {
     };
 
     const openMobile = () => {
+        sidebar.classList.remove('collapsed');
         sidebar.classList.add('open');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -155,6 +156,12 @@ function initSidebar() {
             overlay.classList.remove('active');
             document.body.style.overflow = '';
             sidebar.classList.remove('open');
+
+            // Resync wrapper margin on resize to desktop
+            const wrapper = document.querySelector('.wrapper');
+            if (wrapper) {
+                wrapper.style.marginLeft = sidebar.classList.contains('collapsed') ? '80px' : '240px';
+            }
         }
         setToggleIcon();
     });
