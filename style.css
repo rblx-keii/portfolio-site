@@ -967,10 +967,9 @@ footer {
 .work-table {
 	width: 70%;
 	max-width: 100%;
-	min-height: 300px;
 	max-height: fit-content;
-	margin-left: 10%;
-	margin-right: 10%;
+	margin-left: auto;
+	margin-right: auto;
 	border-collapse: collapse;
 	background-color: #1a1a1a;
 	color: white;

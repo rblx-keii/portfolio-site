@@ -2,13 +2,10 @@
 // Entry point — imports and initializes all modules
 
 import { initNav } from './nav.js';
-import { setupShowcase, setupHomePreview } from './showcase.js';
+import { setupShowcase, setupHomePreview, fetchProjects } from './showcase.js';
 import { initContactForm } from './contact.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    initNav();
-    initContactForm();
-
+async function main() {
     // Project data paths
     const guiProjectPaths = [
         'data/ui/project-1.json',
@@ -23,6 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'data/vector/project-1.json',
     ];
 
+    // Check for vector projects first to initialize nav correctly
+    const vectorProjects = await fetchProjects(vectorProjectPaths);
+    initNav(vectorProjects.length > 0);
+
+    initContactForm();
+
     // Showcase pages
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
     setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths);
@@ -32,4 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupHomePreview('scripting-preview-grid', scriptingProjectPaths, 'scripting.html');
     setupHomePreview('gui-preview-grid', guiProjectPaths, 'ui.html');
     setupHomePreview('vector-preview-grid', vectorProjectPaths, 'ui.html');
-});
+}
+
+document.addEventListener('DOMContentLoaded', main);

@@ -16,11 +16,6 @@ export async function setupShowcase(buttonContainerId, displayContainerId, proje
     if (section) {
         const isHidden = projects.length === 0;
         section.classList.toggle('hidden', isHidden);
-
-        if (isHidden && buttonContainerId === 'vector-project-buttons') {
-            const vectorNavLink = document.querySelector('.nav-links a[href*="#vector-design-showcase"]');
-            if (vectorNavLink) vectorNavLink.parentElement.style.display = 'none';
-        }
     }
     if (projects.length === 0) return;
 
@@ -199,7 +194,7 @@ export async function setupHomePreview(containerId, previewPaths, detailsPageUrl
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-async function fetchProjects(paths) {
+export async function fetchProjects(paths) {
     const fetchPromises = paths.map(path =>
         fetch(path)
             .then(response => {

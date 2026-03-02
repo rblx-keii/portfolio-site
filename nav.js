@@ -1,7 +1,15 @@
 // nav.js
 // Handles: active nav link highlighting, dropdown hover delay, ui.html scroll-based active link
 
-export function initNav() {
+export function initNav(hasVectorProjects) {
+    // On page load, check if there are any vector projects. If not, hide the nav link.
+    if (!hasVectorProjects) {
+        const vectorNavLink = document.querySelector('.nav-links a[href*="#vector-design-showcase"]');
+        if (vectorNavLink) {
+            vectorNavLink.parentElement.style.display = 'none';
+        }
+    }
+
     const currentPath = window.location.pathname.split('/').pop();
     const currentHash = window.location.hash;
 
