@@ -2,13 +2,11 @@
 // Entry point — imports and initializes all modules
 
 import { initNav } from './nav.js';
-import { initHeader } from './header.js';
 import { setupShowcase, setupHomePreview } from './showcase.js';
 import { initContactForm } from './contact.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
-    initHeader();
     initContactForm();
 
     // Project data paths

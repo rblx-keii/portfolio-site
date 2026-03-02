@@ -11,29 +11,71 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <header>
-            <nav>
-                <a href="index.html" class="logo">
-                    <img src="assets/icons/icon.svg" alt="Logo" class="logo-icon" />
-                    <span>rblx-keii</span>
-                </a>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="dropdown">
-                        <a href="scripting.html" class="dropbtn">Works ▾</a>
-                        <ul class="dropdown-content">
-                            <li><a href="scripting.html">Scripting</a></li>
-                            <li><a href="ui.html">GUI</a></li>
-                            <li><a href="ui.html#vector-project-buttons">Vector Design</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="pricing.html">Pricing</a></li>
-                    <li><a href="contact.html" class="active">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
+    <button class="mobile-toggle" aria-label="Open Menu">
+        <img src="assets/icons/menu.svg" alt="Menu" class="icon">
+    </button>
 
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">
+                <img src="assets/icons/icon.svg" alt="Logo" class="logo-icon" />
+                <span class="logo-text">rblx-keii</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="index.html">
+                    <img src="assets/icons/home.svg" class="nav-icon" alt="Home">
+                    <span class="nav-text">Home</span>
+                </a>
+            </li>
+            <li class="nav-dropdown">
+                <a href="#" class="dropdown-toggle">
+                    <img src="assets/icons/works.svg" class="nav-icon" alt="Works">
+                    <span class="nav-text">Past Works</span>
+                    <img src="assets/icons/chevron-down.svg" class="dropdown-arrow" alt="Toggle">
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="scripting.html">
+                            <img src="assets/icons/scripting.svg" class="nav-icon" alt="Scripting">
+                            <span class="nav-text">Scripting</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ui.html">
+                            <img src="assets/icons/ui.svg" class="nav-icon" alt="GUI">
+                            <span class="nav-text">GUI</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="ui.html#vector-design-showcase">
+                            <img src="assets/icons/styles.svg" class="nav-icon" alt="Vector Design">
+                            <span class="nav-text">Vector Design</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="pricing.html">
+                    <img src="assets/icons/pricing.svg" class="nav-icon" alt="Pricing">
+                    <span class="nav-text">Pricing</span>
+                </a>
+            </li>
+            <li>
+                <a href="contact.html">
+                    <img src="assets/icons/mail.svg" class="nav-icon" alt="Contact">
+                    <span class="nav-text">Contact</span>
+                </a>
+            </li>
+        </ul>
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">
+            <img src="assets/icons/sb-close.svg" class="toggle-icon" alt="Toggle">
+        </button>
+    </nav>
+    <div class="sidebar-overlay"></div>
+
+    <div class="wrapper">
         <main class="content">
             <h2 class="section-title">
                 <img src="assets/icons/pricing.svg" alt="Pricing" class="icon"> My Services & Pricing

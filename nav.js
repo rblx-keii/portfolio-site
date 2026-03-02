@@ -6,76 +6,60 @@ export function initNav() {
     const currentHash = window.location.hash;
 
     const navLinks = document.querySelectorAll('.nav-links a');
-    const worksDropbtn = document.querySelector('.dropdown .dropbtn');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
     navLinks.forEach(link => link.classList.remove('active'));
-    if (worksDropbtn) {
-        worksDropbtn.classList.remove('dropbtn-active');
-    }
+    dropdownToggles.forEach(toggle => toggle.parentElement.classList.remove('open'));
 
     navLinks.forEach(link => {
         const linkHref = link.getAttribute('href');
-        let linkPath = linkHref.split('/').pop().split('#')[0];
-        let linkHash = linkHref.includes('#') ? '#' + linkHref.split('#')[1] : '';
+        if (linkHref === '#') return;
+
+        const linkPath = linkHref.split('#')[0].split('/').pop();
 
         if (linkPath === currentPath) {
-            if (currentPath === 'ui.html' && linkPath === 'ui.html') {
-                if (linkHash === currentHash) {
-                    link.classList.add('active');
-                } else if (!currentHash && linkHref === 'ui.html') {
-                    link.classList.add('active');
+            let isActive = false;
+            if (currentPath === 'ui.html') {
+                const linkHasHash = linkHref.includes('#');
+                if (currentHash) { // URL has a hash
+                    if (linkHref.endsWith(currentHash)) {
+                        isActive = true;
+                    }
+                } else { // URL does not have a hash
+                    if (!linkHasHash) {
+                        isActive = true;
+                    }
                 }
-            } else if (!link.classList.contains('dropbtn')) {
+            } else {
+                // For all other pages, if path matches, it's active.
+                if (linkPath) { // Avoid activating on empty hrefs if any
+                    isActive = true;
+                }
+            }
+
+            if (isActive) {
                 link.classList.add('active');
+                const parentDropdown = link.closest('.nav-dropdown');
+                if (parentDropdown) parentDropdown.classList.add('open');
             }
         }
     });
 
-    if (worksDropbtn) {
-        if (currentPath === 'scripting.html' || currentPath === 'ui.html') {
-            worksDropbtn.classList.add('dropbtn-active');
-        }
-    }
-
-    initDropdownHover();
     initUiScrollActiveLink(currentPath);
-}
-
-function initDropdownHover() {
-    const dropdown = document.querySelector('.dropdown');
-    const dropdownContent = document.querySelector('.dropdown-content');
-    const delay = 50;
-    let dropdownTimeout;
-
-    if (!dropdown || !dropdownContent) return;
-
-    dropdown.addEventListener('mouseenter', () => {
-        clearTimeout(dropdownTimeout);
-        dropdownTimeout = setTimeout(() => {
-            dropdownContent.style.display = 'block';
-        }, delay);
-    });
-
-    dropdown.addEventListener('mouseleave', () => {
-        clearTimeout(dropdownTimeout);
-        dropdownTimeout = setTimeout(() => {
-            dropdownContent.style.display = 'none';
-        }, delay);
-    });
+    initSidebar();
 }
 
 function initUiScrollActiveLink(currentPath) {
     if (currentPath !== 'ui.html') return;
 
     const vectorShowcaseSection = document.getElementById('vector-design-showcase');
-    const guiLink = document.querySelector('.dropdown-content a[href="ui.html"]');
-    const vectorLink = document.querySelector('.dropdown-content a[href="ui.html#vector-design-showcase"]');
-    const header = document.querySelector('header');
+    const guiLink = document.querySelector('.nav-links a[href="ui.html"]');
+    const vectorLink = document.querySelector('.nav-links a[href*="#vector-design-showcase"]');
 
-    if (!vectorShowcaseSection || !guiLink || !vectorLink || !header) return;
+    if (!vectorShowcaseSection || !guiLink || !vectorLink) return;
 
     const handleUiScroll = () => {
-        const triggerOffset = header.offsetHeight + 20;
+        const triggerOffset = 20;
         const sectionTop = vectorShowcaseSection.getBoundingClientRect().top;
 
         if (sectionTop <= triggerOffset) {
@@ -88,4 +72,92 @@ function initUiScrollActiveLink(currentPath) {
     };
 
     window.addEventListener('scroll', handleUiScroll, { passive: true });
+}
+
+function initSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    const toggleBtn = document.querySelector('.sidebar-toggle');
+    const mobileToggleBtn = document.querySelector('.mobile-toggle');
+    const toggleIcon = document.querySelector('.sidebar-toggle .toggle-icon');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    if (!sidebar || !overlay || !toggleBtn || !toggleIcon) return;
+
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    const setToggleIcon = () => {
+        const isExpandedOrOpen = isMobile()
+            ? sidebar.classList.contains('open')
+            : !sidebar.classList.contains('collapsed');
+
+        toggleIcon.src = isExpandedOrOpen ? 'assets/icons/sb-close.svg' : 'assets/icons/sb-open.svg';
+        toggleBtn.setAttribute('aria-label', isExpandedOrOpen ? 'Collapse Menu' : 'Expand Menu');
+    };
+
+    const openMobile = () => {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setToggleIcon();
+    };
+
+    const closeMobile = () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+        setToggleIcon();
+    };
+
+    const toggleDesktopCollapsed = () => {
+        sidebar.classList.toggle('collapsed');
+
+        const wrapper = document.querySelector('.wrapper');
+        if (wrapper) {
+            wrapper.style.marginLeft = sidebar.classList.contains('collapsed') ? '80px' : '240px';
+        }
+
+        setToggleIcon();
+    };
+
+    toggleBtn.addEventListener('click', () => {
+        if (isMobile()) {
+            closeMobile();
+        } else {
+            toggleDesktopCollapsed();
+        }
+    });
+
+    if (mobileToggleBtn) {
+        mobileToggleBtn.addEventListener('click', openMobile);
+    }
+    overlay.addEventListener('click', closeMobile);
+
+    navLinks.forEach(link => {
+        // Close mobile sidebar on link click, unless it's a dropdown toggle
+        if (link.classList.contains('dropdown-toggle')) return;
+        link.addEventListener('click', (e) => {
+            if (!isMobile()) return;
+            closeMobile();
+        });
+    });
+
+    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggle.parentElement.classList.toggle('open');
+        });
+    })
+
+    window.addEventListener('resize', () => {
+        // when leaving mobile, ensure overlay/lock is cleared
+        if (!isMobile()) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            sidebar.classList.remove('open');
+        }
+        setToggleIcon();
+    });
+
+    setToggleIcon();
 }
