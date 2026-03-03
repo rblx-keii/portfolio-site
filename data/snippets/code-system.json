@@ -1,0 +1,21 @@
+{
+    "id": "code-system",
+    "title": "Code System",
+    "description": "Basic Redeemable Code System",
+    "media": [
+        "assets/gifs/basic_code_system.gif"
+    ],
+    "features": [
+        "Easily Scalable Areas",
+        "Saves Owned/Purchased Areas",
+        "Easily Configurable",
+        "Area Detection To Load Custom Lighting"
+    ],
+    "tags": [
+        { "text": "Simulator", "filled": true, "color": "#348feb" },
+        { "text": "System", "filled": false, "color": "#db34eb", "outline": true },
+        { "text": "Beginner Friendly", "filled": false, "color": "#34eb4f", "outline": true }
+    ],
+    "demoLink": "#",
+	"hidden": false
+}

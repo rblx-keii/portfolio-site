@@ -1,0 +1,21 @@
+{
+    "id": "secure-trading-system",
+    "title": "Secure Trading System",
+    "description": "A secure, fail-safe trading system.",
+    "media": [
+        "assets/gifs/trading_system.gif"
+    ],
+    "features": [
+        "Two-factor security to prevent scams",
+        "Complete trade logging for moderation",
+        "Real-time item verification",
+        "Confirmation countdown timer"
+    ],
+    "tags": [
+        { "text": "Backend", "filled": true, "color": "#4ade80" },
+        { "text": "UI", "filled": true, "color": "#3b82f6" },
+        { "text": "Security", "filled": false, "color": "#c2c2c2", "outline": true }
+    ],
+    "demoLink": "#",
+	"hidden": false
+}

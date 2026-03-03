@@ -129,6 +129,72 @@ export async function setupShowcase(buttonContainerId, displayContainerId, proje
     }
 }
 
+export async function setupStackedDisplay(containerId, projectPaths) {
+    const displayContainer = document.getElementById(containerId);
+    if (!displayContainer) return;
+
+    const projects = await fetchProjects(projectPaths);
+
+    const section = displayContainer.closest('section');
+    if (section) {
+        section.classList.toggle('hidden', projects.length === 0);
+    }
+    if (projects.length === 0) return;
+
+    displayContainer.innerHTML = '';
+
+    projects.forEach((project) => {
+        const projectItem = document.createElement('div');
+        projectItem.id = project.id;
+        projectItem.classList.add('project-display');
+
+        const projectMedia = document.createElement('div');
+        projectMedia.classList.add('project-media');
+        const carouselContainer = document.createElement('div');
+        carouselContainer.classList.add('carousel-container');
+        const carouselSlides = document.createElement('div');
+        carouselSlides.classList.add('carousel-slides');
+
+        project.media.forEach((mediaSrc, idx) => {
+            carouselSlides.appendChild(createMediaSlide(mediaSrc, project.title, idx));
+        });
+
+        if (project.media.length > 0) {
+            carouselContainer.appendChild(carouselSlides);
+
+            if (project.media.length > 1) {
+                const prevButton = document.createElement('button');
+                prevButton.classList.add('carousel-prev');
+                prevButton.innerHTML = '&lt;';
+                const nextButton = document.createElement('button');
+                nextButton.classList.add('carousel-next');
+                nextButton.innerHTML = '&gt;';
+                const dotsContainer = document.createElement('div');
+                dotsContainer.classList.add('carousel-dots');
+
+                carouselContainer.appendChild(prevButton);
+                carouselContainer.appendChild(nextButton);
+                carouselContainer.appendChild(dotsContainer);
+            }
+        }
+        projectMedia.appendChild(carouselContainer);
+
+        projectItem.appendChild(projectMedia);
+        projectItem.appendChild(createProjectDescription(project));
+        displayContainer.appendChild(projectItem);
+
+        initCarousel(carouselContainer);
+    });
+
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            setTimeout(() => targetElement.scrollIntoView({ behavior: 'smooth' }), 100);
+        }
+    }
+}
+
 export async function setupHomePreview(containerId, previewPaths, detailsPageUrl) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -269,6 +335,8 @@ function createProjectDescription(project) {
         ? `<h4>Features:</h4><ul>${project.features.map(f => `<li>${f}</li>`).join('')}</ul>`
         : '';
 
+    const orderLink = `contact.html?service=Order&project=${encodeURIComponent(project.title)}`;
+
     projectDescription.innerHTML = `
         <div class="project-title-and-tags">
             <h3>${project.title}</h3>
@@ -277,7 +345,7 @@ function createProjectDescription(project) {
         <p>${project.description}</p>
         ${featuresHTML}
         <div class="button-center">
-            <a href="pricing.html" class="button small">Check Pricing</a>
+            <a href="${orderLink}" class="button small">Order Now</a>
         </div>
     `;
 

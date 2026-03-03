@@ -11,8 +11,28 @@ export function initContactForm() {
 
     if (!container || !contactForm) return;
 
-    // Initialize with the first dropdown
-    container.innerHTML = generateSelectHTML(ALL_OPTIONS);
+    // Check for URL parameters to pre-fill the form
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceParam = urlParams.get('service');
+    const projectParam = urlParams.get('project');
+
+    if (serviceParam === 'Order' && projectParam) {
+        const messageField = document.getElementById("messageField");
+        if (messageField) {
+            messageField.value = `I would like to order a copy of the "${decodeURIComponent(projectParam)}" project/system.`;
+        }
+        // Pre-select "Others"
+        container.innerHTML = generateSelectHTML(ALL_OPTIONS);
+        const firstSelect = container.querySelector('select');
+        if (firstSelect) {
+            firstSelect.value = 'Others';
+            // Manually trigger change to update UI (add remove button, etc.)
+            firstSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    } else {
+        // Default initialization
+        container.innerHTML = generateSelectHTML(ALL_OPTIONS);
+    }
     updateMessageFieldState(container);
 
     container.addEventListener("change", (e) => {
@@ -162,12 +182,14 @@ function updateDropdownOptions(container) {
 }
 
 function updateMessageFieldState(container) {
-    const messageField = document.getElementById("message"); // Changed from messageField to match typical form IDs
+    const messageField = document.getElementById("messageField");
     if (!messageField) return;
 
     const selected = getSelectedValues(container);
     messageField.disabled = selected.length === 0;
-    messageField.placeholder = selected.length === 0
-        ? "Please select a service first."
-        : "Your Message";
+    if (messageField.disabled) {
+        messageField.placeholder = "Please select a service first.";
+    } else if (!messageField.value) { // Don't overwrite pre-filled value
+        messageField.placeholder = "Your Message";
+    }
 }

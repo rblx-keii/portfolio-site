@@ -1,0 +1,19 @@
+{
+    "id": "teleport-system",
+    "title": "Basic Teleport System",
+    "description": "A showcase of a modular and scalable teleport system with a transition effect.",
+    "media": [
+        "assets/gifs/teleport_system_with_transition.gif"
+    ],
+    "features": [
+        "Usable for Area/World Teleportation",
+        "Easily Customizable Transition Effect"
+    ],
+    "tags": [
+        { "text": "Simulator", "filled": true, "color": "#348feb" },
+        { "text": "System", "filled": false, "color": "#db34eb", "outline": true },
+        { "text": "Beginner Friendly", "filled": false, "color": "#34eb4f", "outline": true }
+    ],
+    "demoLink": "#",
+	"hidden": false
+}
