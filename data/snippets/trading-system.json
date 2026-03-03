@@ -6,15 +6,16 @@
         "assets/gifs/trading_system.gif"
     ],
     "features": [
-        "Two-factor security to prevent scams",
-        "Complete trade logging for moderation",
-        "Real-time item verification",
-        "Confirmation countdown timer"
+        "Double confirmation system: Ready and Confirm States",
+        "Trade cancellation at any stage",
+        "Trade history logging for both parties",
+        "Alert system for no items being traded from the other party",
+        "Private chat system for traders to communicate during the trade"
     ],
     "tags": [
-        { "text": "Backend", "filled": true, "color": "#4ade80" },
-        { "text": "UI", "filled": true, "color": "#3b82f6" },
-        { "text": "Security", "filled": false, "color": "#c2c2c2", "outline": true }
+        { "text": "Simulator", "filled": true, "color": "#348feb" },
+        { "text": "System", "filled": false, "color": "#db34eb", "outline": true },
+        { "text": "Moderate Integration", "filled": false, "color": "#e36b20", "outline": true }
     ],
     "demoLink": "#",
 	"hidden": false
