@@ -104,25 +104,29 @@ function initForm() {
         if (submitBtn) submitBtn.disabled = true;
         showResponse('Sending feedback...', 'success');
 
-        const widget = uploadcare.Widget('#feedback-screenshot');
+        const widget = uploadcare.Widget('[role="uploadcare-uploader"]');
         const fileGroup = widget.value();
         let imageUrls = [];
-
+    
         if (fileGroup) {
             try {
-                // Check if it's a group (multiple files) or a single file promise
-                if (typeof fileGroup.done === 'function') {
+                // Check if it's a group (multiple files) or a single file
+                if (fileGroup.files) { 
+                    // It's a group: wait for all uploads to finish
                     const groupInfo = await fileGroup.done();
                     imageUrls = groupInfo.files().map(file => file.cdnUrl);
                 } else {
-                    // Fallback for single file or direct promise
+                    // It's a single file promise
                     const fileInfo = await fileGroup;
                     imageUrls = [fileInfo.cdnUrl];
                 }
             } catch (err) {
-                console.error("Uploadcare resolution failed:", err);
+                console.error("Upload failed or was cancelled:", err);
+                showResponse('Image upload failed. Please try again.', 'error');
+                return;
             }
         }
+        
         const payload = {
             type: "FEEDBACK",
             name: form.name.value,
