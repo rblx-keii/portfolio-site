@@ -109,11 +109,20 @@ function initForm() {
         let imageUrls = [];
 
         if (fileGroup) {
-            const groupInfo = await fileGroup.done();
-            // This creates an array of direct links for each uploaded file
-            imageUrls = groupInfo.files().map(file => file.cdnUrl);
+            try {
+                // Check if it's a group (multiple files) or a single file promise
+                if (typeof fileGroup.done === 'function') {
+                    const groupInfo = await fileGroup.done();
+                    imageUrls = groupInfo.files().map(file => file.cdnUrl);
+                } else {
+                    // Fallback for single file or direct promise
+                    const fileInfo = await fileGroup;
+                    imageUrls = [fileInfo.cdnUrl];
+                }
+            } catch (err) {
+                console.error("Uploadcare resolution failed:", err);
+            }
         }
-
         const payload = {
             type: "FEEDBACK",
             name: form.name.value,
