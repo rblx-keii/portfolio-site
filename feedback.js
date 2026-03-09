@@ -27,14 +27,20 @@ async function displayFeedback(container) {
     container.innerHTML = feedbackData.map(createFeedbackCardHTML).join('');
 }
 
+// Updated helper to render multiple images
 function createFeedbackCardHTML(feedback) {
     const stars = '&#9733;'.repeat(feedback.rating) + '&#9734;'.repeat(5 - feedback.rating);
     const formattedDate = new Date(feedback.date).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    const imageHTML = feedback.image && feedback.image !== "No screenshot provided"
-        ? `<img src="${feedback.image}" alt="Feedback from ${escapeHTML(feedback.name)}" class="proof-image">`
+    // Ensure images is an array, even if old data had a single string
+    const images = Array.isArray(feedback.images) ? feedback.images : (feedback.image ? [feedback.image] : []);
+    
+    const imagesHTML = images.length > 0 
+        ? `<div class="feedback-gallery">
+            ${images.map(img => `<img src="${img}" alt="Proof" class="proof-image">`).join('')}
+           </div>`
         : '';
 
     return `
@@ -44,7 +50,7 @@ function createFeedbackCardHTML(feedback) {
                 <div class="stars">${stars}</div>
             </div>
             <p>"${escapeHTML(feedback.message)}"</p>
-            ${imageHTML}
+            ${imagesHTML}
             <div class="date">${formattedDate}</div>
         </div>
     `;
@@ -84,13 +90,23 @@ function initForm() {
         if (submitBtn) submitBtn.disabled = true;
         showResponse('Sending feedback...', 'success');
 
+        const widget = uploadcare.Widget('#feedback-screenshot');
+        const fileGroup = widget.value();
+        let imageUrls = [];
+
+        if (fileGroup) {
+            const groupInfo = await fileGroup.done();
+            // This creates an array of direct links for each uploaded file
+            imageUrls = groupInfo.files().map(file => file.cdnUrl);
+        }
+
         const payload = {
             type: "FEEDBACK",
-            name,
-            rating: parseInt(rating),
-            message,
+            name: form.name.value,
+            rating: parseInt(document.getElementById('feedbackRating').value),
+            message: form.message.value,
             date: new Date().toISOString().split('T')[0],
-            image: imageUrl || "No screenshot provided"
+            images: imageUrls // We use "images" as an array now
         };
 
         try {
