@@ -53,6 +53,25 @@ export function initNav(hasVectorProjects) {
         }
     });
 
+    // Create and append the new commission indicator
+    const commissionWidget = document.createElement('a');
+    commissionWidget.href = 'contact.html';
+    commissionWidget.className = 'commission-indicator-widget';
+    commissionWidget.innerHTML = `
+        <div class="indicator-content">
+            <span class="status-dot open"></span>
+            <span class="indicator-text">Commissions: Open</span>
+        </div>
+        <div class="indicator-hover-modal">
+            <h3>Commissions are Open!</h3>
+            <p>I'm currently accepting new projects. If you have an idea you'd like to discuss, feel free to get in touch.</p>
+            <div class="button small">Contact Me</div>
+        </div>
+    `;
+    const wrapper = document.querySelector('.wrapper');
+    if (wrapper) wrapper.prepend(commissionWidget);
+    else document.body.prepend(commissionWidget);
+
     initUiScrollActiveLink(currentPath);
     initSidebar();
 }
