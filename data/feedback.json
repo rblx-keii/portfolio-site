@@ -7,12 +7,5 @@
     "image": "",
     "featured": true,
     "duration": "8 Months"
-  },
-  {
-    "name": "test",
-    "rating": 5,
-    "message": "test",
-    "date": "2026-03-09",
-    "images": []
   }
 ]
