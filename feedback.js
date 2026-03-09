@@ -56,11 +56,10 @@ function createFeedbackCardHTML(feedback) {
                             <img src="${img}" alt="Proof" class="proof-image">
                         </div>
                     `,
-            )
-            .join("")}
+                )
+                .join("")}
                 </div>
-                ${
-            images.length > 1
+                ${images.length > 1
                 ? `
                     <button class="feedback-arrow prev">&lt;</button>
                     <button class="feedback-arrow next">&gt;</button>
@@ -68,8 +67,8 @@ function createFeedbackCardHTML(feedback) {
                         ${images.map((_, i) => `<span class="feedback-dot ${i === 0 ? "active" : ""}" data-slide-to="${i}"></span>`).join("")}
                     </div>
                 `
-            : ""
-                }
+                : ""
+            }
             </div>`;
     }
 
@@ -125,63 +124,63 @@ function initForm() {
         let imageUrls = [];
 
         if (fileGroup) {
-          try {
-              // Check if multiple files (group) or single file
-              if (typeof fileGroup.done === "function") {
-                  const groupInfo = await fileGroup.done(); // CORRECTED: Use .done()
-                  imageUrls = groupInfo.files().map((file) => file.cdnUrl);
-              } else {
-                  const fileInfo = await fileGroup; // Single file promise
-                  imageUrls = [fileInfo.cdnUrl];
-              }
-          } catch (err) {
-              console.error("Upload failed:", err);
-              showResponse("Image upload failed. Please try again.", "error");
-              if (submitBtn) submitBtn.disabled = false;
-              return;
-          }
-      }
+            try {
+                // Check if multiple files (group) or single file
+                if (typeof fileGroup.done === "function") {
+                    const groupInfo = await fileGroup.done(); // CORRECTED: Use .done()
+                    imageUrls = groupInfo.files().map((file) => file.cdnUrl);
+                } else {
+                    const fileInfo = await fileGroup; // Single file promise
+                    imageUrls = [fileInfo.cdnUrl];
+                }
+            } catch (err) {
+                console.error("Upload failed:", err);
+                showResponse("Image upload failed. Please try again.", "error");
+                if (submitBtn) submitBtn.disabled = false;
+                return;
+            }
+        }
 
         const payload = {
             type: "FEEDBACK",
             name: form.name.value,
-          rating: parseInt(document.getElementById("feedbackRating").value),
-          message: form.message.value,
-          date: new Date().toISOString().split("T")[0],
-          images: imageUrls, // We use "images" as an array now
-      };
+            rating: parseInt(document.getElementById("feedbackRating").value),
+            message: form.message.value,
+            date: new Date().toISOString().split("T")[0],
+            images: imageUrls, // We use "images" as an array now
+        };
 
         try {
             const response = await fetch(WORKER_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-          });
+                body: JSON.stringify(payload),
+            });
 
-          if (response.ok) {
-          // Optimistic UI update
-            const feedbackContainer = document.getElementById("feedback-container");
-            const newCardHTML = createFeedbackCardHTML(payload);
-            if (feedbackContainer.querySelector("p")) {
-                feedbackContainer.innerHTML = newCardHTML;
+            if (response.ok) {
+                // Optimistic UI update
+                const feedbackContainer = document.getElementById("feedback-container");
+                const newCardHTML = createFeedbackCardHTML(payload);
+                if (feedbackContainer.querySelector("p")) {
+                    feedbackContainer.innerHTML = newCardHTML;
+                } else {
+                    feedbackContainer.insertAdjacentHTML("afterbegin", newCardHTML);
+                }
+
+                showResponse(
+                    "Thank you! Your feedback will be live in a minute.",
+                    "success",
+                );
+                form.reset();
+                ratingInput.value = "0";
+                stars.forEach((s) => s.classList.remove("selected"));
+                if (window.uploadcare) {
+                    uploadcare.Widget(screenshotInput).value(null);
+                }
             } else {
-              feedbackContainer.insertAdjacentHTML("afterbegin", newCardHTML);
-          }
-
-            showResponse(
-                "Thank you! Your feedback will be live in a minute.",
-                "success",
-            );
-            form.reset();
-              ratingInput.value = "0";
-              stars.forEach((s) => s.classList.remove("selected"));
-              if (window.uploadcare) {
-                  uploadcare.Widget(screenshotInput).value(null);
-              }
-          } else {
-              throw new Error("Worker Error");
-          }
-      } catch (error) {
+                throw new Error("Worker Error");
+            }
+        } catch (error) {
             showResponse("Failed to send. Please try again later.", "error");
         } finally {
             if (submitBtn) submitBtn.disabled = false;
@@ -213,9 +212,9 @@ function initFeedbackCarousels() {
         function updateCarousel() {
             slides.style.transform = `translateX(-${currentIndex * 100}%)`;
             dots.forEach((dot, index) => {
-              dot.classList.toggle("active", index === currentIndex);
-          });
-      }
+                dot.classList.toggle("active", index === currentIndex);
+            });
+        }
 
         prevBtn.addEventListener("click", () => {
             currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
