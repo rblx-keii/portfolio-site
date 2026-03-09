@@ -127,11 +127,16 @@ function initForm() {
             try {
                 // Check if multiple files (group) or single file
                 if (typeof fileGroup.done === "function") {
-                    const groupInfo = await fileGroup.done(); // CORRECTED: Use .done()
-                    imageUrls = groupInfo.files().map((file) => file.cdnUrl);
+                    const groupInfo = await fileGroup.done();
+                    imageUrls = groupInfo.files().map((file) => {
+                        // Ensure it starts with https://ucarecdn.com/
+                        const url = file.cdnUrl;
+                        return url.startsWith('http') ? url : `https://41nmiahqqo.ucarecd.net/${url}/`;
+                    });
                 } else {
-                    const fileInfo = await fileGroup; // Single file promise
-                    imageUrls = [fileInfo.cdnUrl];
+                    const fileInfo = await fileGroup;
+                    const url = fileInfo.cdnUrl;
+                    imageUrls = [url.startsWith('http') ? url : `https://41nmiahqqo.ucarecd.net/${url}/`];
                 }
             } catch (err) {
                 console.error("Upload failed:", err);
@@ -158,19 +163,19 @@ function initForm() {
             });
 
             if (response.ok) {
-                // Optimistic UI update
                 const feedbackContainer = document.getElementById("feedback-container");
                 const newCardHTML = createFeedbackCardHTML(payload);
+
                 if (feedbackContainer.querySelector("p")) {
                     feedbackContainer.innerHTML = newCardHTML;
                 } else {
                     feedbackContainer.insertAdjacentHTML("afterbegin", newCardHTML);
                 }
 
-                showResponse(
-                    "Thank you! Your feedback will be live in a minute.",
-                    "success",
-                );
+                // NEW: Re-run carousel and modal logic so the new card is interactive
+                initFeedbackCarousels();
+
+                showResponse("Thank you! Your feedback will be live in a minute.", "success");
                 form.reset();
                 ratingInput.value = "0";
                 stars.forEach((s) => s.classList.remove("selected"));
