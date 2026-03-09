@@ -11,6 +11,7 @@ export async function initFeedbackPage() {
 
     await displayFeedback(feedbackContainer);
     initImageModal();
+    initFeedbackCarousels();
     initForm();
 }
 
@@ -27,21 +28,34 @@ async function displayFeedback(container) {
     container.innerHTML = feedbackData.map(createFeedbackCardHTML).join('');
 }
 
-// Updated helper to render multiple images
 function createFeedbackCardHTML(feedback) {
     const stars = '&#9733;'.repeat(feedback.rating) + '&#9734;'.repeat(5 - feedback.rating);
     const formattedDate = new Date(feedback.date).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    // Ensure images is an array, even if old data had a single string
     const images = Array.isArray(feedback.images) ? feedback.images : (feedback.image ? [feedback.image] : []);
     
-    const imagesHTML = images.length > 0 
-        ? `<div class="feedback-gallery">
-            ${images.map(img => `<img src="${img}" alt="Proof" class="proof-image">`).join('')}
-           </div>`
-        : '';
+    let imagesHTML = '';
+    if (images.length > 0) {
+        imagesHTML = `
+            <div class="feedback-gallery" ${images.length > 1 ? 'data-carousel="true"' : ''}>
+                <div class="feedback-slides">
+                    ${images.map(img => `
+                        <div class="feedback-slide">
+                            <img src="${img}" alt="Proof" class="proof-image">
+                        </div>
+                    `).join('')}
+                </div>
+                ${images.length > 1 ? `
+                    <button class="feedback-arrow prev">&lt;</button>
+                    <button class="feedback-arrow next">&gt;</button>
+                    <div class="feedback-dots">
+                        ${images.map((_, i) => `<span class="feedback-dot ${i === 0 ? 'active' : ''}" data-slide-to="${i}"></span>`).join('')}
+                    </div>
+                ` : ''}
+            </div>`;
+    }
 
     return `
         <div class="feedback-card">
@@ -150,6 +164,43 @@ function showResponse(message, type) {
     responseEl.style.color = type === 'error' ? '#ff4d4d' : 'inherit';
     responseEl.classList.remove('hidden');
     setTimeout(() => responseEl.classList.add('hidden'), 5000);
+}
+
+function initFeedbackCarousels() {
+    const galleries = document.querySelectorAll('.feedback-gallery[data-carousel="true"]');
+
+    galleries.forEach(gallery => {
+        const slides = gallery.querySelector('.feedback-slides');
+        const prevBtn = gallery.querySelector('.feedback-arrow.prev');
+        const nextBtn = gallery.querySelector('.feedback-arrow.next');
+        const dots = gallery.querySelectorAll('.feedback-dot');
+        const totalSlides = slides.children.length;
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentIndex = parseInt(dot.dataset.slideTo, 10);
+                updateCarousel();
+            });
+        });
+    });
 }
 
 function escapeHTML(str) {
