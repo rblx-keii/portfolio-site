@@ -4,11 +4,13 @@
 import { initNav } from './nav.js';
 import { setupShowcase, setupStackedDisplay, setupHomePreview, fetchProjects } from './showcase.js';
 import { initContactForm } from './contact.js';
+import { initFeedbackPage } from './feedback.js';
 
 async function main() {
     // Project data paths
     const guiProjectPaths = [
         'data/ui/project-1.json',
+        'data/ui/project-2.json',
     ];
 
     const scriptingProjectPaths = [
@@ -31,6 +33,7 @@ async function main() {
     const vectorProjects = await fetchProjects(vectorProjectPaths);
     initNav(vectorProjects.length > 0);
 
+    initFeedbackPage();
     initContactForm();
 
     // Showcase pages

@@ -3,10 +3,10 @@
     "title": "Custom Admin Panel UI Design",
     "description": "This project showcases a custom admin panel UI, featuring a modern and responsive layout with interactive elements. The design emphasizes usability and aesthetics, making it suitable for various applications.",
     "features": [
-        "Key feature 1: Polished and modern design with a focus on user experience",
-        "Key feature 2: Rensponsive layout that adapts to different screen sizes",
-        "Key feature 3: Smooth animations and transitions for a dynamic user experience",
-        "Key feature 4: Interactive elements such as buttons, dropdowns, and modals"
+      "Polished and modern design with a focus on user experience",
+      "Rensponsive layout that adapts to different screen sizes",
+      "Smooth animations and transitions for a dynamic user experience",
+      "Interactive elements such as buttons, dropdowns, and modals"
     ],
     "media": [
         "assets/images/ui/admin-panel/admin_panel_home_page.png",
