@@ -1,0 +1,20 @@
+{
+    "id": "project1",
+    "title": "Simple Clicker Game Template",
+    "description": "This project is a simple clicker game template designed for Roblox. It features basic mechanics such as clicking to earn points, upgrading abilities, and a simple user interface. The game is intended to serve as a starting point for developers looking to create their own clicker games on the Roblox platform.",
+    "features": [
+        "Basic Clicker Mechanics",
+        "Upgrade System",
+        "Pet and Trade System",
+        "Rebirth and Multiplier System",
+        "Data Persistence & Security"
+    ],
+    "media": [
+        "assets/images/scripts/project-1/image1.jpg",
+        "assets/images/scripts/project-1/image2.jpg",
+        "youtube.com/embed/dQw4w9WgXcQ"
+    ],
+    "demoLink": "#",
+    "hidden": true,
+    "tags": []
+}
