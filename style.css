@@ -456,32 +456,21 @@ section.hidden {
 
 /* === WORK PREVIEW GRID === */
 .work-preview-grid {
-	margin-top: 2rem;
-	column-gap: 2rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: 2rem;
-	column-count: 1; /* Default for mobile-first */
-}
-
-@media (min-width: 600px) {
-	.work-preview-grid {
-		column-count: 2;
-	}
-}
-
-@media (min-width: 900px) {
-	.work-preview-grid {
-		column-count: 3;
-	}
+	margin-top: 2rem;
 }
 
 .work-item {
+	flex: 0 1 320px;
 	background-color: #1a1a1a;
 	padding: 1.5rem;
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 	text-align: center;
 	transition: transform 0.2s ease-in-out;
-	break-inside: avoid; /* Prevent items from breaking across columns */
 }
 
 .work-item:hover {
@@ -496,6 +485,10 @@ section.hidden {
 }
 
 .work-item p {
+	display: none;
+}
+
+.work-item:nth-child(n + 7) {
 	display: none;
 }
 
