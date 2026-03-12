@@ -16,5 +16,24 @@
     ],
     "demoLink": "#",
     "hidden": false,
-    "tags": []
+    "tags": [
+        {
+            "text": "Game Template",
+            "color": "#ffffff",
+            "filled": false,
+            "outline": true
+        },
+        {
+            "text": "Drag and Drop",
+            "color": "#4f4f4f",
+            "filled": true,
+            "outline": false
+        },
+        {
+            "text": "Easy to Use",
+            "color": "#32e029",
+            "filled": true,
+            "outline": false
+        }
+    ]
 }

@@ -658,13 +658,15 @@ section.hidden {
 	border-color: #22c55e;
 }
 
-.project-display {
+.project-display,
+[id$='-project-display'] {
 	margin-top: 2rem;
 	background-color: #1a1a1a;
 	border-radius: 8px;
 	padding: 2rem;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 	text-align: left;
+	width: 100%;
 }
 
 .project-content {
