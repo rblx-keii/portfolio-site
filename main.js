@@ -6,6 +6,12 @@ import { setupShowcase, setupStackedDisplay, setupHomePreview, fetchProjects } f
 import { initContactForm } from './contact.js';
 import { initFeedbackPage } from './feedback.js';
 
+function buildPaths(category, ids) {
+    if (!ids || !Array.isArray(ids)) return [];
+
+    return ids.map(id => `data/${category}/${id}.json`);
+}
+
 async function main() {
 
     const directory = await fetch("data/directory.json").then(r => r.json());
