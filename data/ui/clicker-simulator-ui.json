@@ -1,0 +1,37 @@
+{
+    "id": "clicker-simulator-ui",
+    "title": "Clicker Simulator UI",
+    "description": "This project showcases a Clicker Simulator UI, featuring a classic cartoony simulator design.",
+    "features": [
+        "Fun colors and polished design.",
+        "Clean UX Layout"
+    ],
+    "media": [
+        "assets/images/ui/clicker-sim/main-hud.png",
+        "assets/images/ui/clicker-sim/inventory-frame.png",
+        "assets/images/ui/clicker-sim/rebirth-frame.png",
+        "assets/images/ui/clicker-sim/menu-frame.png"
+    ],
+    "tags": [
+        {
+            "text": "Flat",
+            "filled": true,
+            "color": "#007bff",
+            "outline": false
+        },
+        {
+            "text": "Simulator",
+            "filled": true,
+            "color": "#1E90FF",
+            "outline": true
+        },
+        {
+            "text": "Cartoony",
+            "filled": true,
+            "color": "#3CB371",
+            "outline": true
+        }
+    ],
+    "demoLink": "#",
+    "hidden": false
+}
