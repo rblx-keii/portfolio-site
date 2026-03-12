@@ -7,42 +7,26 @@ import { initContactForm } from './contact.js';
 import { initFeedbackPage } from './feedback.js';
 
 async function main() {
-    // Project data paths
-    const guiProjectPaths = [
-        'data/ui/project-1.json',
-        'data/ui/project-2.json',
-    ];
 
-    const scriptingProjectPaths = [
-        'data/scripts/project-1.json',
-        'data/scripts/project-2.json',
-    ];
+    const directory = await fetch("data/directory.json").then(r => r.json());
 
-    const vectorProjectPaths = [
-        'data/vector/project-1.json',
-    ];
+    const guiProjectPaths = buildPaths("ui", directory.ui);
+    const scriptingProjectPaths = buildPaths("scripts", directory.scripts);
+    const vectorProjectPaths = buildPaths("vector", directory.vector);
+    const showcasePaths = buildPaths("snippets", directory.snippets);
 
-	const showcasePaths = [
-		'data/snippets/area-unlocking-and-custom-lighting-system.json',
-		'data/snippets/trading-system.json',
-		'data/snippets/code-system.json',
-        'data/snippets/teleport-system.json'
-	];
-
-    // Check for vector projects first to initialize nav correctly
     const vectorProjects = await fetchProjects(vectorProjectPaths);
     initNav(vectorProjects.length > 0);
 
     initFeedbackPage();
     initContactForm();
 
-    // Showcase pages
     setupShowcase('gui-project-buttons', 'gui-project-display', guiProjectPaths);
     setupShowcase('scripting-project-buttons', 'scripting-project-display', scriptingProjectPaths);
     setupShowcase('vector-project-buttons', 'vector-project-display', vectorProjectPaths);
+
     setupStackedDisplay('showcase-container', showcasePaths);
 
-    // Home page preview grids
     setupHomePreview('scripting-preview-grid', scriptingProjectPaths, 'scripting.html');
     setupHomePreview('gui-preview-grid', guiProjectPaths, 'ui.html');
     setupHomePreview('vector-preview-grid', vectorProjectPaths, 'ui.html');

@@ -1,0 +1,20 @@
+{
+  "scripts": [
+    "project1",
+    "project2"
+  ],
+  "snippets": [
+    "area-unlocking-and-custom-lighting-system",
+    "code-system",
+    "teleport-system",
+    "trading-system"
+  ],
+  "ui": [
+    "project-1",
+    "project-2",
+    "sakura-themed-cartoon-ui"
+  ],
+  "vector": [
+    "project-1"
+  ]
+}
