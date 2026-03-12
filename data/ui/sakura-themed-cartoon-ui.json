@@ -1,11 +1,11 @@
 {
     "id": "sakura-themed-cartoon-ui",
     "title": "Sakura Theme Cartoon UI",
-    "description": "placeholder",
+    "description": "Sakura Theme UI:\nConsists of 6 Frames and relevant components.\n\nFeatures a clean layout, soft pink palette, and subtle floral accents for a modern themed interface.",
     "features": [
-        "Soft",
-        "High-Gloss",
-        "Rounded Geometry &"
+        "Soft Coquette Aesthetic & Palette",
+        "High-Gloss Glassmorphism Effects",
+        "Rounded Geometry & Bubble Design"
     ],
     "media": [
         "assets/images/ui/sakura-themed-cartoon-ui/Latest.png",
@@ -37,5 +37,6 @@
             "filled": true,
             "outline": false
         }
-    ]
+    ],
+    "newMediaFiles": []
 }
