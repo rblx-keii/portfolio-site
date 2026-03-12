@@ -1,7 +1,7 @@
 // nav.js
 // Handles: active nav link highlighting, dropdown hover delay, ui.html scroll-based active link
 
-export function initNav(hasVectorProjects) {
+export async function initNav(hasVectorProjects) {
     // On page load, check if there are any vector projects. If not, hide the nav link.
     if (!hasVectorProjects) {
         const vectorNavLink = document.querySelector('.nav-links a[href*="#vector-design-showcase"]');
@@ -53,27 +53,39 @@ export function initNav(hasVectorProjects) {
         }
     });
 
-    // Create and append the new commission indicator
+    // Fetch commission status and create the indicator
+    try {
+        const response = await fetch('data/status.json');
+        if (!response.ok) throw new Error('Status not found');
+        const status = await response.json();
+        createCommissionWidget(status.open);
+    } catch (error) {
+        console.error("Could not fetch commission status:", error);
+        createCommissionWidget(false); // Default to closed on error
+    }
+
+    initUiScrollActiveLink(currentPath);
+    initSidebar();
+}
+
+function createCommissionWidget(isOpen) {
     const commissionWidget = document.createElement('a');
     commissionWidget.href = 'contact.html';
     commissionWidget.className = 'commission-indicator-widget';
     commissionWidget.innerHTML = `
         <div class="indicator-content">
-            <span class="status-dot open"></span>
-            <span class="indicator-text">Commissions: Open</span>
+            <span class="status-dot ${isOpen ? 'open' : 'closed'}"></span>
+            <span class="indicator-text">Commissions: ${isOpen ? 'Open' : 'Closed'}</span>
         </div>
         <div class="indicator-hover-modal">
-            <h3>Commissions are Open!</h3>
-            <p>I'm currently accepting new projects. If you have an idea you'd like to discuss, feel free to get in touch.</p>
-            <div class="button small">Contact Me</div>
+            <h3>Commissions are ${isOpen ? 'Open!' : 'Currently Closed'}</h3>
+            <p>${isOpen ? "I'm currently accepting new projects. If you have an idea you'd like to discuss, feel free to get in touch." : "I'm not taking new commissions right now, but feel free to browse my work. Check back later!"}</p>
+            ${isOpen ? '<a href="contact.html" class="button small">Contact Me</a>' : ''}
         </div>
     `;
     const wrapper = document.querySelector('.wrapper');
     if (wrapper) wrapper.prepend(commissionWidget);
     else document.body.prepend(commissionWidget);
-
-    initUiScrollActiveLink(currentPath);
-    initSidebar();
 }
 
 function initUiScrollActiveLink(currentPath) {

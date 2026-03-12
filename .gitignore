@@ -1,1 +1,8 @@
 .env
+.gitignore
+
+# Local admin dashboard files and dependencies
+/admin
+/node_modules
+package.json
+package-lock.json
