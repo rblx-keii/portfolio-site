@@ -508,6 +508,7 @@ section.hidden {
 
 /* === CONTENT === */
 .content {
+	width: 80%;
 	max-width: 100%;
 	margin: auto;
 	padding: 1.5rem 1.5rem;
