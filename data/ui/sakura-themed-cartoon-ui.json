@@ -3,12 +3,19 @@
     "title": "Sakura Theme Cartoon UI",
     "description": "placeholder",
     "features": [
-        "Soft \"Coquette\" Aesthetic & Palette",
-        "High-Gloss \"Glassmorphism\" Effects",
-        "Rounded Geometry & \"Bubble\" Design"
+        "Soft",
+        "High-Gloss",
+        "Rounded Geometry &"
     ],
     "media": [
-        "assets/images/ui/sakura-themed-cartoon-ui/Latest.png"
+        "assets/images/ui/sakura-themed-cartoon-ui/Latest.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Buttons.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Current Outfit.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Loader.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Outfit List.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Outfit Viewer.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Save Outfit - Stage 2.png",
+        "assets/images/ui/sakura-themed-cartoon-ui/Save Outfit.png"
     ],
     "hidden": false,
     "tags": [
