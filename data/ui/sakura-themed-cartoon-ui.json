@@ -1,0 +1,34 @@
+{
+    "id": "sakura-themed-cartoon-ui",
+    "title": "Sakura Theme Cartoon UI",
+    "description": "placeholder",
+    "features": [
+        "Soft \"Coquette\" Aesthetic & Palette",
+        "High-Gloss \"Glassmorphism\" Effects",
+        "Rounded Geometry & \"Bubble\" Design"
+    ],
+    "media": [
+        "assets/images/ui/sakura-themed-cartoon-ui/Latest.png"
+    ],
+    "hidden": false,
+    "tags": [
+        {
+            "text": "Sakura",
+            "color": "#ff80c3",
+            "filled": true,
+            "outline": false
+        },
+        {
+            "text": "Interactive",
+            "color": "#89ff82",
+            "filled": false,
+            "outline": true
+        },
+        {
+            "text": "Cartoon",
+            "color": "#e771fe",
+            "filled": true,
+            "outline": false
+        }
+    ]
+}
