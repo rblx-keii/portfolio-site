@@ -456,11 +456,22 @@ section.hidden {
 
 /* === WORK PREVIEW GRID === */
 .work-preview-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	gap: 2rem;
 	margin-top: 2rem;
-	justify-content: center;
+	column-gap: 2rem;
+	gap: 2rem;
+	column-count: 1; /* Default for mobile-first */
+}
+
+@media (min-width: 600px) {
+	.work-preview-grid {
+		column-count: 2;
+	}
+}
+
+@media (min-width: 900px) {
+	.work-preview-grid {
+		column-count: 3;
+	}
 }
 
 .work-item {
@@ -468,11 +479,9 @@ section.hidden {
 	padding: 1.5rem;
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	text-align: center;
 	transition: transform 0.2s ease-in-out;
+	break-inside: avoid; /* Prevent items from breaking across columns */
 }
 
 .work-item:hover {
@@ -487,15 +496,13 @@ section.hidden {
 }
 
 .work-item p {
-	font-size: 1rem;
-	line-height: 1.6;
-	margin-bottom: 1.5rem;
-	flex-grow: 1;
+	display: none;
 }
 
 .work-item img {
 	max-width: 100%;
-	height: 200px;
+	width: 100%;
+	height: auto;
 	object-fit: cover;
 	border-radius: 4px;
 	margin-bottom: 1rem;

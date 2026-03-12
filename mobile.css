@@ -126,14 +126,6 @@
 		font-size: 1.8rem;
 	}
 
-	.work-preview-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.work-item img {
-		height: 150px;
-	}
-
 	.section-view-all-button {
 		margin-top: 4rem;
 	}
