@@ -6,16 +6,30 @@
         "assets/gifs/basic_code_system.gif"
     ],
     "features": [
-        "Easily Scalable Areas",
-        "Saves Owned/Purchased Areas",
+        "Easy to Use",
+        "Saves redeemed code",
         "Easily Configurable",
-        "Area Detection To Load Custom Lighting"
+        "Supports Limited Time Codes"
     ],
     "tags": [
-        { "text": "Simulator", "filled": true, "color": "#348feb" },
-        { "text": "System", "filled": false, "color": "#db34eb", "outline": true },
-        { "text": "Beginner Friendly", "filled": false, "color": "#34eb4f", "outline": true }
+        {
+            "text": "Simulator",
+            "filled": true,
+            "color": "#348feb"
+        },
+        {
+            "text": "System",
+            "filled": false,
+            "color": "#db34eb",
+            "outline": true
+        },
+        {
+            "text": "Beginner Friendly",
+            "filled": false,
+            "color": "#34eb4f",
+            "outline": true
+        }
     ],
     "demoLink": "#",
-	"hidden": false
+    "hidden": false
 }
