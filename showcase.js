@@ -335,8 +335,7 @@ function createProjectDescription(project) {
         ? `<h4>Features:</h4><ul>${project.features.map(f => `<li>${f}</li>`).join('')}</ul>`
         : '';
 
-    // Check if any tag is marked exclusive
-    const isExclusive = project.tags && project.tags.some(t => t.exclusive);
+    const isExclusive = !!project.exclusive;
     const orderLink = `contact.html?service=Order&project=${encodeURIComponent(project.title)}`;
     const orderButtonHTML = isExclusive
         ? `<span class="button small exclusive-btn" title="This project is exclusive and not available for re-sale.">Exclusive</span>`
