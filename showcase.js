@@ -339,7 +339,7 @@ function createProjectDescription(project) {
     const isExclusive = project.tags && project.tags.some(t => t.exclusive);
     const orderLink = `contact.html?service=Order&project=${encodeURIComponent(project.title)}`;
     const orderButtonHTML = isExclusive
-        ? `<span class="button small exclusive-btn" title="This project is exclusive and not available for re-sale.">\u{1F512} Exclusive</span>`
+        ? `<span class="button small exclusive-btn" title="This project is exclusive and not available for re-sale.">Exclusive</span>`
         : `<a href="${orderLink}" class="button small">Order Now</a>`;
 
     projectDescription.innerHTML = `
