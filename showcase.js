@@ -326,8 +326,7 @@ function createProjectDescription(project) {
                 } else {
                     style = `background-color: #333; color: #eee;`;
                 }
-                const exclusiveBadge = tag.exclusive ? ' \u{1F512}' : '';
-                return `<span class="tag" style="${style}">${tag.text}${exclusiveBadge}</span>`;
+                return `<span class="tag" style="${style}">${tag.text}</span>`;
             }).join(' ')}
            </div>`
         : '';
