@@ -36,6 +36,13 @@
             "color": "#e771fe",
             "filled": true,
             "outline": false
+        },
+        {
+            "text": "Exclusive",
+            "color": "#f780ff",
+            "filled": false,
+            "outline": true,
+            "exclusive": true
         }
     ],
     "newMediaFiles": []
