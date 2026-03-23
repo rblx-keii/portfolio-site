@@ -326,7 +326,8 @@ function createProjectDescription(project) {
                 } else {
                     style = `background-color: #333; color: #eee;`;
                 }
-                return `<span class="tag" style="${style}">${tag.text}</span>`;
+                const exclusiveBadge = tag.exclusive ? ' \u{1F512}' : '';
+                return `<span class="tag" style="${style}">${tag.text}${exclusiveBadge}</span>`;
             }).join(' ')}
            </div>`
         : '';
@@ -335,7 +336,12 @@ function createProjectDescription(project) {
         ? `<h4>Features:</h4><ul>${project.features.map(f => `<li>${f}</li>`).join('')}</ul>`
         : '';
 
+    // Check if any tag is marked exclusive
+    const isExclusive = project.tags && project.tags.some(t => t.exclusive);
     const orderLink = `contact.html?service=Order&project=${encodeURIComponent(project.title)}`;
+    const orderButtonHTML = isExclusive
+        ? `<span class="button small exclusive-btn" title="This project is exclusive and not available for re-sale.">\u{1F512} Exclusive</span>`
+        : `<a href="${orderLink}" class="button small">Order Now</a>`;
 
     projectDescription.innerHTML = `
         <div class="project-title-and-tags">
@@ -345,7 +351,7 @@ function createProjectDescription(project) {
         <p>${project.description}</p>
         ${featuresHTML}
         <div class="button-center">
-            <a href="${orderLink}" class="button small">Order Now</a>
+            ${orderButtonHTML}
         </div>
     `;
 

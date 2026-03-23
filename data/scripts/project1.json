@@ -9,7 +9,8 @@
         "Customizability"
     ],
     "media": [
-        "https://youtu.be/XB9rLIKBW04"
+        "https://youtu.be/XB9rLIKBW04",
+        "assets/images/scripts/project1/RobloxScreenShot20260323_131700247.png"
     ],
     "demoLink": "#",
     "hidden": false,
@@ -26,10 +27,5 @@
             "filled": true,
             "outline": false
         }
-    ],
-    "newMedia": [
-        {},
-        {},
-        {}
     ]
 }
