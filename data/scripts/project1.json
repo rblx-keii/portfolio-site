@@ -1,28 +1,17 @@
 {
     "id": "project1",
-    "title": "Simple Clicker Game Template",
-    "description": "This project is a simple clicker game template designed for Roblox. It features basic mechanics such as clicking to earn points, upgrading abilities, and a simple user interface. The game is intended to serve as a starting point for developers looking to create their own clicker games on the Roblox platform.",
+    "title": "Inventory System /w Item Drag Support",
+    "description": "A simple Inventory System /w Item Drag Support",
     "features": [
-        "Basic Clicker Mechanics",
-        "Upgrade System",
-        "Pet and Trade System",
-        "Rebirth and Multiplier System",
-        "Data Persistence & Security"
+        "Supports Item Categories",
+        "Item Search",
+        "Item Dragging",
+        "Customizability"
     ],
-    "media": [
-        "assets/images/scripts/project-1/image1.jpg",
-        "assets/images/scripts/project-1/image2.jpg",
-        "youtube.com/embed/dQw4w9WgXcQ"
-    ],
+    "media": [],
     "demoLink": "#",
     "hidden": false,
     "tags": [
-        {
-            "text": "Game Template",
-            "color": "#ffffff",
-            "filled": false,
-            "outline": true
-        },
         {
             "text": "Drag and Drop",
             "color": "#4f4f4f",
@@ -35,5 +24,10 @@
             "filled": true,
             "outline": false
         }
+    ],
+    "newMedia": [
+        {},
+        {},
+        {}
     ]
 }
